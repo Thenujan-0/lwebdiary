@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{URL::asset("css/createFirstDiary.css")}}">
+    <link rel="stylesheet" href="{{secure_secure_asset("css/createFirstDiary.css")}}">
     <script src="js/createFirstDiary.js"></script>
     <title>Welcome</title>
 </head>

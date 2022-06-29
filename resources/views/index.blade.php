@@ -1,10 +1,10 @@
 @extends('layouts.app')
     @section('head')
-    <link rel="stylesheet" href="{{URL::asset('css/index.css')}}">
+    <link rel="stylesheet" href="{{secure_secure_asset('css/index.css')}}">
     <script>
         var token ="{{ csrf_token() }}";
     </script>
-    <script src="{{URL::asset('js/index.js')}}"></script>
+    <script src="{{secure_secure_asset('js/index.js')}}"></script>
     <title>Web Diary</title>
     @endsection
     
