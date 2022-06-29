@@ -1,0 +1,160 @@
+@import url(https://fonts.googleapis.com/css2?family=Akshar&family=Roboto:wght@400;900&display=swap);
+.animDance {
+  -webkit-animation: dance 0.3s;
+          animation: dance 0.3s;
+}
+
+@-webkit-keyframes dance {
+  0% {
+    left: 0;
+  }
+  25% {
+    left: -30px;
+  }
+  75% {
+    left: 30px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes dance {
+  0% {
+    left: 0;
+  }
+  25% {
+    left: -30px;
+  }
+  75% {
+    left: 30px;
+  }
+  100% {
+    left: 0;
+  }
+}
+.error {
+  border: 1px solid red;
+  border-radius: 5px;
+  background: rgba(255, 92, 92, 0.1);
+  padding: 5px;
+  position: relative;
+  margin-bottom: 20px;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  margin: 5px 0;
+}
+
+p.iGroupError {
+  margin: 5px 0;
+  color: rgb(177, 0, 0);
+  border-bottom: 1px solid red;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  white-space: nowrap;
+}
+
+div.iGroupErrorWrapper {
+  -webkit-animation: animateIGroupError 2s 0.5s;
+          animation: animateIGroupError 2s 0.5s;
+  overflow: hidden;
+}
+
+@-webkit-keyframes animateIGroupError {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes animateIGroupError {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.errorText {
+  color: rgba(255, 0, 0, 0.7);
+  -webkit-animation: fadeIn 1s;
+          animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+
+#createFirstDiary {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-family: "Roboto", sans-serif;
+  padding: 20px;
+  border-radius: 5px;
+}
+#createFirstDiary form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#createFirstDiary h2 {
+  text-align: center;
+  font-weight: normal;
+}
+#createFirstDiary h2:nth-child(1) {
+  font-weight: bold;
+}
+#createFirstDiary .name {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#createFirstDiary .name input, #createFirstDiary .name p {
+  font-size: 20px;
+  margin: 5px;
+  color: black;
+}
+#createFirstDiary .name input {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  outline: none;
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+#createFirstDiary p {
+  color: #333;
+}
+#createFirstDiary button {
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 18px;
+  background: #fff;
+  border-radius: 5px;
+  background: #2CFFF2;
+}

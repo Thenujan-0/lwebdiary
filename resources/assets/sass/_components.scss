@@ -1,0 +1,21 @@
+
+.btn{
+    outline:none;
+    border:none;
+    font-size:18px;
+    cursor:pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+}
+
+
+.anchor{
+    text-decoration:none;
+    color:$anchor-color;
+    text-decoration: underline;
+}
+
+.nodisplay{
+    display:hidden;
+}

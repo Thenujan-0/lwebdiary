@@ -1,0 +1,201 @@
+.animDance {
+  -webkit-animation: dance 0.3s;
+          animation: dance 0.3s;
+}
+
+@-webkit-keyframes dance {
+  0% {
+    left: 0;
+  }
+  25% {
+    left: -30px;
+  }
+  75% {
+    left: 30px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes dance {
+  0% {
+    left: 0;
+  }
+  25% {
+    left: -30px;
+  }
+  75% {
+    left: 30px;
+  }
+  100% {
+    left: 0;
+  }
+}
+.error {
+  border: 1px solid red;
+  border-radius: 5px;
+  background: rgba(255, 92, 92, 0.1);
+  padding: 5px;
+  position: relative;
+  margin-bottom: 20px;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  margin: 5px 0;
+}
+
+p.iGroupError {
+  margin: 5px 0;
+  color: rgb(177, 0, 0);
+  border-bottom: 1px solid red;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  white-space: nowrap;
+}
+
+div.iGroupErrorWrapper {
+  -webkit-animation: animateIGroupError 2s 0.5s;
+          animation: animateIGroupError 2s 0.5s;
+  overflow: hidden;
+}
+
+@-webkit-keyframes animateIGroupError {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes animateIGroupError {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.errorText {
+  color: rgba(255, 0, 0, 0.7);
+  -webkit-animation: fadeIn 1s;
+          animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+* {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background: white;
+  height: 100vh;
+}
+
+form#formWriteDiary {
+  width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+form#formWriteDiary .inputGroup {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+form#formWriteDiary ul {
+  list-style-type: none;
+  padding: 0;
+}
+form#formWriteDiary * {
+  font-size: 18px;
+}
+form#formWriteDiary input[type=date] {
+  width: 130px;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  border-radius: 2px;
+}
+form#formWriteDiary textarea {
+  min-height: 80px;
+  max-height: 480px;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  padding: 10px;
+}
+form#formWriteDiary button, form#formWriteDiary .btnBack, form#formWriteDiary div.btnDiary {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background: #333;
+  color: white;
+  font-size: 18px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+form#formWriteDiary .btnAdd {
+  background: #2CFFF2;
+  float: right;
+}
+form#formWriteDiary .btnBack {
+  margin-right: 30px;
+  background: white;
+  border: 1px solid rgb(0, 172, 172);
+  color: rgb(0, 172, 172);
+}
+form#formWriteDiary .btnAdd, form#formWriteDiary .btnBack {
+  width: 30%;
+}
+form#formWriteDiary div.btnDiary {
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  background: rgb(37, 37, 37);
+}
+form#formWriteDiary div.btnDiary > p {
+  display: inline;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+form#formWriteDiary .btnDiary.selected {
+  background: rgb(7, 219, 7);
+  color: white;
+}
+form#formWriteDiary .btnDiary.selected > i {
+  color: white;
+}

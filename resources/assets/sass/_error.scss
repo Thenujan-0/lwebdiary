@@ -1,0 +1,69 @@
+//Needs position relative
+.animDance{
+    animation: dance 0.3s ;
+}
+
+@keyframes dance{
+    0%{
+        left:0;
+    }
+    25%{
+        left:-30px; 
+    }
+    75%{
+        left:30px;
+    }
+    100%{
+        left:0;
+    }
+}
+
+.error{
+    border:1px solid red;
+    border-radius:5px;
+    background:rgba(255, 92, 92, 0.1);
+    padding:5px;
+    position:relative;
+    margin-bottom:20px; 
+    max-width:fit-content;
+    margin:5px 0;
+}
+
+p.iGroupError{
+    margin: 5px 0;
+    color:rgb(177, 0, 0);
+    border-bottom:1px solid red;
+    max-width:fit-content;
+    white-space: nowrap;
+}
+
+div.iGroupErrorWrapper{
+    animation: animateIGroupError 2s 0.5s;
+    overflow:hidden;
+
+    
+}
+
+@keyframes animateIGroupError{
+    from{
+        width:0%;
+    }
+    to{
+        width:100%;
+
+    }
+}
+
+.errorText{
+    color:rgba(255, 0,0, 0.7);
+    animation:fadeIn 1s;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}

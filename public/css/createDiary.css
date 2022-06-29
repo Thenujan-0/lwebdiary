@@ -1,0 +1,27 @@
+form#formCreateDiary {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background: white;
+  padding: 50px;
+  border-radius: 10px;
+}
+form#formCreateDiary input[type=text] {
+  width: 500px;
+  margin: 10px 0;
+  border: 1px solid black;
+  font-size: 18px;
+}
+form#formCreateDiary input[type=submit], form#formCreateDiary input[type=button] {
+  width: 150px;
+  background-color: #2CFFF2;
+  color: black;
+}
+form#formCreateDiary input[type=button].btnCancel {
+  background: #666;
+  color: white;
+}

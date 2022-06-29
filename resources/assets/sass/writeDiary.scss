@@ -1,0 +1,120 @@
+
+@import "colors";
+@import "mixins";
+@import "error";
+
+*{
+    margin:0;
+    font-family:"Roboto",sans-serif;
+}
+
+body{
+    background: white;
+    height:100vh;
+}
+
+
+form#formWriteDiary{
+    width:700px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+    display: flex;
+    flex-direction: column;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+
+    .inputGroup{
+        display: flex;
+        flex-direction: column;
+        flex-grow:0;
+        flex-shrink:0;
+        margin-bottom: 20px;
+    }
+
+    ul{
+        list-style-type: none;
+        padding:0;
+    }
+
+    *{
+        font-size: 18px;
+    }
+
+    input[type=date]{
+        width:130px;
+        border:1px solid rgba(0,0,0,0.9);
+        border-radius:2px;
+    }
+
+
+    textarea{
+        min-height:80px;
+        max-height:480px;
+        border:1px solid rgba(0,0,0,0.7);
+        border-radius: 5px;
+
+        padding:10px;
+    }
+
+
+    button,.btnBack,div.btnDiary{
+        border:none;
+        outline:none;
+        border-radius: 5px;
+        background: #333;
+        color:white;
+        font-size:18px;
+        padding:5px 10px;
+        cursor:pointer;
+    }
+    .btnAdd{
+        // width:80px;
+        background:$primary-color;
+
+        float:right;
+    }
+
+    .btnBack{
+        margin-right:30px;
+        background:white;
+        border:1px solid $dark-primary-color;
+        color:$dark-primary-color;
+    }
+
+    .btnAdd,.btnBack{
+        width:30%;
+        
+    }
+
+    div.btnDiary  {
+        //Custom button
+        display:inline-block;
+        width:fit-content;
+        height:fit-content;
+        padding:10px;
+
+        color:rgb(255, 255, 255);
+        background:rgb(37, 37, 37);
+    
+        &>p{
+            display:inline;
+            user-select:none;
+        }
+    }
+
+
+    .btnDiary.selected{
+        background:rgb(7, 219, 7);
+        color:white;
+
+        &>i{
+            color:white;
+        }
+    }
+
+    
+}
