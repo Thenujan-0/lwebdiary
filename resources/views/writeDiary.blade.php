@@ -1,7 +1,7 @@
     
-<link rel="stylesheet" href="{{secure_secure_asset("css/writeDiary.css")}}">
+<link rel="stylesheet" href="{{secure_asset("css/writeDiary.css")}}">
 
-<script src="{{secure_secure_asset("js/writeDiary.js")}}"></script>
+<script src="{{secure_asset("js/writeDiary.js")}}"></script>
 <form action="diaryEntry/create" id="formWriteDiary" enctype="multipart/form-data" method="put" style="display:none;">
     @csrf
     {{-- <input type="button" id="btnBackWriteDiary" value='Back'> --}}
