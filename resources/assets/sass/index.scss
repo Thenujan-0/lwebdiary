@@ -70,7 +70,7 @@
             // margin-bottom: 0;
             padding:10px 15px;
             background:white;;
-            // border:2px solid $dark-primary-color;
+            // border:2px solid $secondary-color;
             border:none;
             border-radius: 15px;
             cursor:pointer;
@@ -79,7 +79,7 @@
 
 
         &:hover{
-            border:2px solid $dark-primary-color;
+            border:2px solid $secondary-color;
             position:relative;
             right:2px;
             padding-top:8px;
@@ -94,7 +94,7 @@
         .btnDiary.selected{
             position: relative;
             bottom:-10px;
-            border-bottom:2px solid $dark-primary-color;
+            border-bottom:2px solid $secondary-color;
             padding-bottom:8px;
         }
     
@@ -106,10 +106,10 @@
         background:white;    
         border-radius:15px;
         padding:10px 15px;
-        color:$dark-primary-color;
+        color:$secondary-color;
 
         &:hover{
-            border:2px solid $dark-primary-color;
+            border:2px solid $secondary-color;
             position:relative;
             padding-top:8px;
             padding-bottom: 8px;
@@ -131,7 +131,7 @@
         height:calc(80vh - 45px);
         border-radius:10px;
         position:relative;
-        border-top:2px solid $dark-primary-color;
+        border-top:2px solid $secondary-color;
 
 
         p.diaryData{
@@ -183,13 +183,17 @@
 
     position:relative;
     filter:drop-shadow(0px 0px 10px black);
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0 10px;
 
     h1{
         font-weight: normal;
         text-align: center;
-        position:relative;
-        top:50%;
-        transform: translateY(-50%);
+        // position:relative;
+        // top:50%;
+        // transform: translateY(-50%);
     }
     button#btnWriteEntry{
         position:absolute;
@@ -208,7 +212,7 @@
     }
 }
 
-.btnWrite{
+.btn.btnWrite{
     position: absolute;
     bottom:20px;
     right:20px;

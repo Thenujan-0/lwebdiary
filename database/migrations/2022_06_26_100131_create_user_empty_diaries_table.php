@@ -13,15 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('diary_entries', function (Blueprint $table) {
-            $table->id();
+        Schema::create("user_empty_diaries",function (Blueprint $table){
+            $table->id(); 
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("diary_name_id");
-            $table->date("date");
-            $table->mediumText("data");
+            
+            $table->foreign("user_id")
+                ->references("id")
+                ->on("users")
+                ->onDelete("cascade");
 
-            $table->foreign("user_id")->references("id")->on("users");
-            $table->foreign("diary_name_id")->references("id")->on("diary_names");
+            // $table->foreign("diary_name_id")
+            //     ->references("id")
+            //     ->on("diary_names")
+            //     ->onDelete("cascade");
         });
     }
 
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('diary_entries');
+        Schema::dropIfExists('user_empty_diaries');
     }
 };

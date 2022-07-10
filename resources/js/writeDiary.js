@@ -33,10 +33,10 @@ $(document).ready(function() {
     function checkDateExists(){
         let date_ =form.find("#date").val()
 
-        var data = { action: 'dateExists',date :date_};
+        var data = { action: 'dateExists',date :date_,_token:token};
         console.log("checking dateexists")
 
-        $.post("libs/ajax.inc.php", data, function(response) {
+        $.post("dateExists", data, function(response) {
             console.log("")
             if(response === "true") {
                 showErrorDate("Date already exists")
@@ -105,7 +105,7 @@ $(document).ready(function() {
             }
 
             return valid
-
+            
         },
 
         complete: function(xhr) {
@@ -113,8 +113,26 @@ $(document).ready(function() {
             if(xhr.responseText==="true"){
                 console.log("clicked back button")
                 form.find("#btnBackWriteDiary").click()
+                window.location.reload()
             }else{
-                console.log(xhr.status)
+                console.log("Warning : unexpected response from server when writing to diary")
+                console.log(typeof xhr.responseText)
+                try{
+                    let obj = JSON.parse(xhr.responseText)
+
+                    let  { errors:{date:messages}} = obj
+                    console.log(messages)
+
+                    let finalMessage = messages.reduce(function(acc,curr){
+                        return acc+curr+"<br>"  
+                    },"")
+                    showErrorDate(finalMessage)
+                    console.log(finalMessage)
+                }catch(e){
+                    console.log("caught error",e)
+                }
+                    console.log(xhr.status)
+                
             }
         }
     })

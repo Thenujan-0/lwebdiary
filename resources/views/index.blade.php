@@ -1,10 +1,10 @@
 @extends('layouts.app')
     @section('head')
-    <link rel="stylesheet" href="{{secure_asset('css/index.css')}}">
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
     <script>
         var token ="{{ csrf_token() }}";
     </script>
-    <script src="{{secure_asset('js/index.js')}}"></script>
+    <script src="{{asset('js/index.js')}}"></script>
     <title>Web Diary</title>
     @endsection
     
@@ -13,8 +13,13 @@
 
     <div class="main">
         <div id="topBar">
+            <div class="buttons">
+                <button class="btn" id="btnExport">Export</button>
+                <button class="btn" id="btnImport">Import</button>
+                <input type="file" name="importFile" id="importFileInput" accept=".json" hidden>
+            </div>
             <h1>{{$firstName}}'s personal diary</h1>
-            <!-- <button id="btnWriteEntry">Write a new entry</button> -->
+            <div></div>
         </div>
 
         <div id="sideBar">
@@ -56,9 +61,9 @@
         
     </div>
     <div id="darkOverlay" style="display:none;"></div>
-    @include("writeDiary")
-    @include("createDiary")
-    
+    @include("includes.writeDiary")
+    @include("includes.createDiary")
+    @error('newerror') 
+    <h1>{{$message}}</h1>
+    @enderror
 @endsection
-{{-- </body> --}}
-{{-- </html> --}}

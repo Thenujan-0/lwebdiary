@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{secure_asset("css/createFirstDiary.css")}}">
+    <link rel="stylesheet" href="{{asset("css/createFirstDiary.css")}}">
     <script src="js/createFirstDiary.js"></script>
     <title>Welcome</title>
 </head>
 <body>
     <div id="createFirstDiary">
-        <form method="post" id="createDiaryForm" action="createFirstDiary" enctype="multipart/form-data">
+        <form method="post" id="createDiaryForm" action="createDiary" enctype="multipart/form-data">
             @csrf
             <h2>Welcome to web diary</h2>
             <h2>To get started create your first diary</h2>

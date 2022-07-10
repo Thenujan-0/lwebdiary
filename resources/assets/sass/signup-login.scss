@@ -8,18 +8,68 @@
     font-family:'Roboto',sans-serif;
 }
 
+.cont{
+    width:100vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 100vh;
+
+
+    // &:after{
+    //     content:"";
+    //     display:block;
+    //     min-height:30px;
+    //     width:100%;
+
+    //     flex-grow: 1;
+    // }
+
+}
+
+
+.main{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    
+}
+
+
+img{
+    width:200px;
+    // position: relative;
+    // left:50%;
+    // top:20%;
+    // transform: translateX(-50%);
+
+    margin:20px 0;
+}
+
 form{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    // position:relative;
+    // // top:50%;
+    // left:50%;
+    // transform: translateX(-50%);
+    width:300px;
 
     display: flex;
     flex-direction: column;
 
+    margin-bottom:20px;
+
+    .error{
+        width:100%;
+    }
+
     fieldset{
+        background:white;
+
         border-radius: 10px;
-        border:1px solid rgba(0,0,0,0.5);
+        border:1px solid rgba(0,0,0,0.2);
         padding:30px 20px;
     }
 
@@ -29,24 +79,41 @@ form{
     }
 
     label{
-        color:rgba(0,0,0,0.9)
+        color:rgba(0,0,0,1)
     }
 
     input{
-        padding:5px;
-        border:1px solid rgba(0,0,0,0.5);
+        border:1px solid rgba(0,0,0,0.2);
+        // border:none;
+        outline:none;
         margin:5px 0;
-        border-radius: 2px;
-        font-size:18px;
+        border-radius: 3px;
+        font-size:16px;
         padding:5px;
 
     }
+    input:focus{
+        border:1px solid $secondary-color;
+        outline:none;
+        // box-shadow: 0 0 0 2px $primary-color;
+
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+        transition: background-color 600000s 0s, color 600000s 0s;
+    }
+    input[data-autocompleted] {
+        background-color: transparent !important;
+    }
+
+    
     button,input[type="submit"]{
         display: block;
         background:$primary-color;
         padding :5px 20px;
         border-radius: 5px;
         width:100%;
+        margin-bottom:10px;
     }
 }
 

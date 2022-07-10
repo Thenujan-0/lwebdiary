@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\DiaryName;
 
 
-class DiaryEntry extends Model
+class UserEmptyDiary extends Model
 {
     use HasFactory;
     public $timestamps=false;
-    protected $table="diary_entries";
 
-    protected $hidden=["user_id"];
+    protected $fillable=["user_id","diary_name_id"];
 
     public function diaryName(){
         return $this->belongsTo(DiaryName::class);
     }
+
 }

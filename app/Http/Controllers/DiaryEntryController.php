@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Session;
 use Debugbar;
 use Illuminate\Support\Facades\Http;
 
+use App\Models\DiaryName;
+
+
 class DiaryEntryController extends Controller
 {
     /**
@@ -27,13 +30,35 @@ class DiaryEntryController extends Controller
      */
     public function create(Request $request)
     {
+
         $user_id=Session::get("user_id");
+
+        
+
         $date=$request->input("date");
         $data=$request->input("data");
-        $diaries=$request->input("selectedDiaries");
+        $diaries=explode("$$$$$",$request->input("selectedDiaries"));
+        $diaries=array_filter($diaries);
 
+        //Find diary name ids
+        foreach($diaries as $diary){
+            // echo($diary);
+            // DebugBar::warning("Diary: ".$diary);
+            $diaryName=DiaryName::where("diary_name",$diary)->first();
+            $diaryNameIds[]=$diaryName->id;
 
-        DiaryEntry::insert(["user_id"=>$user_id,"date"=>$date,"data"=>$data]);   
+        }
+
+        // DebugBar::warning($diaryNameIds);
+        foreach($diaryNameIds as $diaryNameId){
+            $diaryEntry=new DiaryEntry();
+            $diaryEntry->date=$date;
+            $diaryEntry->data=$data;
+            $diaryEntry->user_id=$user_id;
+            $diaryEntry->diary_name_id=$diaryNameId;
+            $diaryEntry->save();
+        }
+        // DiaryEntry::insert(["user_id"=>$user_id,"date"=>$date,"data"=>$data]);   
         return response("true");
     }
 
@@ -57,9 +82,17 @@ class DiaryEntryController extends Controller
     public function show(Request $request)
     {
         $date = $request->date;
+        $selectedDiary=$request->selectedDiary;
+
+        //Find id of selected diary
+        $diaryId=DiaryName::where("diary_name",$selectedDiary)->first()->id;
+
         $user_id=Session::get("user_id");
-        $data = DiaryEntry::where(["user_id"=>$user_id,"date"=>$date])->first("data")->data;
-        return $data;
+        $dataRecord = DiaryEntry::where(["user_id"=>$user_id,"date"=>$date,"diary_name_id"=>$diaryId])->first("data");
+        if(is_null($dataRecord)){
+            return response("");
+        }
+        return $dataRecord->data;
     }
 
     /**
@@ -93,7 +126,6 @@ class DiaryEntryController extends Controller
      */
     public function destroy(Request $request)
     {
-        Debugbar::warning("request recieved");
         $date=$request->date;
         $user_id= Session::get("user_id");
 

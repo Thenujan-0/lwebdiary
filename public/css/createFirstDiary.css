@@ -80,7 +80,7 @@ div.iGroupErrorWrapper {
   }
 }
 .errorText {
-  color: rgba(255, 0, 0, 0.7);
+  color: rgba(255, 0, 0, 0.822);
   -webkit-animation: fadeIn 1s;
           animation: fadeIn 1s;
 }

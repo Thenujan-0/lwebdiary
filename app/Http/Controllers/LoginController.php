@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Users_table;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -32,24 +33,34 @@ class LoginController extends Controller
     // }
 
     public function loginUser(Request $request){
+
+        //Validate the email first
         $request->validate([
             'email'=>'required|max:255|email',
+            
+        ]);
+        //And then save the email in cookie
+        $email=$request->input("email");
+        Cookie::queue("email",$email,60*24*30);
+        $request->validate([
             'password'=>'required'
         ]);
 
         $name = $request->input("email");
         $password_sum = hash("sha256",$request->input("password"));
-        $data= User::get()->where("email",$name)->where("password",$password_sum)->first();
+        $data= User::get()->where("email",$name)->first();
 
-        if (!empty($data)){
-            Session::put("user_id",$data->value("id"));
-            Session::put("name",$data->value("name"));
-            return redirect()->route("index");
-        }else{
-
-            return back()->withErrors(['main'=>'Invalid email or password '.$data]);
-
+        if (empty($data)){
+            return back()->withErrors(['main'=>'There is no account on this email address']);
         }
+        
+        if ($data->password!=$password_sum){
+            return back()->withErrors(['main'=>'Invalid password']);
+        }
+
+        Session::put("user_id",$data->value("id"));
+        Session::put("name",$data->value("name"));
+        return redirect()->route("index");
 
     }
 
@@ -58,7 +69,7 @@ class LoginController extends Controller
             'fullname'=>'required',
             'email'=>'required|unique:users',
             'password'=>'required'
-        ]);
+        ],["email.unique"=>"This email is already registered"]);
         $name=$request->input("fullname");
         $email=$request->input("email");
         $password=hash('sha256',$request->input("password"));
@@ -68,7 +79,12 @@ class LoginController extends Controller
                 'email'=>$email,
                 'password'=>$password
             ]);
-            return redirect()->route("index");;
+
+            //Add session variables
+            $user_id=User::get()->where("email",$email)->first()->value("id");
+            Session::put(["user_id"=>$user_id,"name"=>$name]);
+
+            return redirect()->route("index");
 
         }catch(Exception $e){
             return back()->withErrors(['main'=>'Couldn\'t create account. An error occured']);
@@ -76,6 +92,7 @@ class LoginController extends Controller
         }
 
     }
+
 
     public function login(){
         return view("auth.login");

@@ -7,9 +7,19 @@ $(document).ready(function () {
   var form = $("#formCreateDiary");
   form.ajaxForm({
     complete: function complete(response) {
-      console.log(response.reponseText);
-      window.location.reload();
+      console.log(response); // window.location.reload()
+
+      if (response.responseText != "") {
+        form.find(".btnCancel").click();
+      }
     }
+  }); //Add create diary button callback
+
+  $(".btnCreateDiary").click(function () {
+    var overlay = $("#darkOverlay");
+    var form = $("#formCreateDiary");
+    form.css("display", "flex");
+    overlay.css("display", "block");
   });
 
   function removeForm() {
@@ -20,7 +30,6 @@ $(document).ready(function () {
 
 
   form.find(".btnCancel").click(removeForm);
-  form.find("input[type=submit]").click(removeForm);
 });
 /******/ })()
 ;

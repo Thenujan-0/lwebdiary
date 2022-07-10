@@ -2,6 +2,7 @@ $(document).ready(function(){
     
     let main =$(".main")
 
+
     //Add btnWriteEntry callback
     $("#btnWriteEntry").click()
 
@@ -13,13 +14,26 @@ $(document).ready(function(){
         $(".btnWriteInline").css("display","inline")
     }
 
-
+    //The following variable is used to know if a request to setDiary data is already pending
+    window.pendingsetDiaryDataReq=false;
     function setDiaryData(){
+
+        //If already a request is pending don't send another one
+        if (window.pendingsetDiaryDataReq){
+            console.log("pending diary Data request")
+            return;
+        }
+        window.pendingsetDiaryDataReq=true;
+
+
+
         let selectedDiary_= $(".btnDiary.selected").html()
         console.log("selectedDiary",selectedDiary_)
-        let data = {action:"getDiaryData",date:$(".btnDate.selected").html(),selectedDiary:selectedDiary_}
+        let data = {date:$(".btnDate.selected").html(),selectedDiary:selectedDiary_}
         $.get("diaryEntry/show",data,function (response){
-            console.log(response,"resp")
+            // console.log(response,"resp")
+            window.pendingsetDiaryDataReq=false;
+
             if(response!=""){
                 $(".diaryData").html(response)
             }else{
@@ -33,11 +47,31 @@ $(document).ready(function(){
     setDiaryData()
 
 
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:	application/json;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        
+        element.click();
+        
+        document.body.removeChild(element);
+    }
+
     //Add btnDate callback
     function btnDateCallback(){
         let date=$(this).html()
-        console.log(date)
-        // $("#selectedDate").val(date)
+
+        //Last selected date
+        let lastSelDate=$('.btnDate.selected').html()
+
+        if(lastSelDate==date){
+            return;
+        }
+
 
         //Remove selected from date (technically there should only be one)
         $(".btnDate.selected").removeClass("selected")
@@ -65,37 +99,39 @@ $(document).ready(function(){
 
         //check if it is empty by checking 
         //If it has an inline write button,
-        
-        if($(".btnWriteInline").length){
+        //If it does then we are ediing an empty entry
+        if($(".btnWriteInline").length>0){
 
             //We have to do some processing to remove the inline write button from the text
             textData = textData.substr(0,textData.length-5)
             console.log(textData)
-            let data={action:"writeDiaries",
-                selectedDiaries:[selectedDiary_],
+            let data={_token:token,
+                selectedDiaries:selectedDiary_,
                 data:textData,
-                date:$(".btnDate.selected").html()
+                date:$(".btnDate.selected").html(),
+                allowDuplicateDates:true
 
             }
             console.log(selectedDiary_,textData,data)
             
             //todo
-            $.post("diaryEntry/update",data,function(response){
+            $.post("writeDiary",data,function(response){
                 console.log(response)
                 setDiaryData()
             })
 
-
+        //If it is not > 0, we are editing an existing entry
         }else{
             console.log(textData)
-            let data={action:"editDiaryData",
+            let data={
                 selectedDiary:selectedDiary_,
                 data:textData,
+                _token:token,
                 date:$(".btnDate.selected").html()
 
             }
             console.log(selectedDiary_,textData,data)
-            $.post("libs/ajax.inc.php",data,function(response){
+            $.post("editDiaryData",data,function(response){
                 console.log(response)
                 setDiaryData()
             })
@@ -132,13 +168,7 @@ $(document).ready(function(){
     })
 
 
-    //Add create diary button callback
-    $(".btnCreateDiary").click(function(){
-        let overlay=$("#darkOverlay")
-        let form =$("#formCreateDiary")
-        form.css("display","flex")
-        overlay.css("display","block")
-    })
+    
 
 
     //Add btnDiary callback
@@ -174,6 +204,32 @@ $(document).ready(function(){
     })
 
 
+    //Add btnExport callback
+    $("#btnExport").click(function(){
+        let data={_token:token}
+
+        $.post("exportDiary",data,function(response){
+            console.log(response)
+            console.log(typeof response)
+            download("teraDiaryExport.json",response) //todo remove this
+            // window.open(response)
+        })
+    })
+
+    //Add btnImport callback
+    $("#btnImport").click(function(){
+        $("#importFileInput").click()
+    })
+
+
+    //Add importFileInput callback
+    $("#importFileInput").change(function(event){
+        let files=event.target.files
+        let file=files[0]
+        console.log(file.name)
+        console.log(file.type)
+        console.log($(this).val())
+    })
     
 
 

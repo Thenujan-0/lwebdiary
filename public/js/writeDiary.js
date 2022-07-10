@@ -3,6 +3,8 @@ var __webpack_exports__ = {};
 /*!************************************!*\
   !*** ./resources/js/writeDiary.js ***!
   \************************************/
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 $(document).ready(function () {
   var form = $("#formWriteDiary");
 
@@ -44,10 +46,11 @@ $(document).ready(function () {
     var date_ = form.find("#date").val();
     var data = {
       action: 'dateExists',
-      date: date_
+      date: date_,
+      _token: token
     };
     console.log("checking dateexists");
-    $.post("libs/ajax.inc.php", data, function (response) {
+    $.post("dateExists", data, function (response) {
       console.log("");
 
       if (response === "true") {
@@ -112,7 +115,24 @@ $(document).ready(function () {
       if (xhr.responseText === "true") {
         console.log("clicked back button");
         form.find("#btnBackWriteDiary").click();
+        window.location.reload();
       } else {
+        console.log("Warning : unexpected response from server when writing to diary");
+        console.log(_typeof(xhr.responseText));
+
+        try {
+          var obj = JSON.parse(xhr.responseText);
+          var messages = obj.errors.date;
+          console.log(messages);
+          var finalMessage = messages.reduce(function (acc, curr) {
+            return acc + curr + "<br>";
+          }, "");
+          showErrorDate(finalMessage);
+          console.log(finalMessage);
+        } catch (e) {
+          console.log("caught error", e);
+        }
+
         console.log(xhr.status);
       }
     }

@@ -1,7 +1,7 @@
     
-<link rel="stylesheet" href="{{secure_asset("css/writeDiary.css")}}">
+<link rel="stylesheet" href="{{asset("css/writeDiary.css")}}">
 
-<script src="{{secure_asset("js/writeDiary.js")}}"></script>
+<script src="{{asset("js/writeDiary.js")}}"></script>
 <form action="diaryEntry/create" id="formWriteDiary" enctype="multipart/form-data" method="put" style="display:none;">
     @csrf
     {{-- <input type="button" id="btnBackWriteDiary" value='Back'> --}}
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="buttons">
-        <input type="button" name="back" class="btn btnBack" id="btnBackWriteDiary" value='Back'>
+        <input type="button" name="back" class="btn btnBack btnSecondary" id="btnBackWriteDiary" value='Back'>
 
         <input type="submit" name="submit" class="btn btnAdd" value="Add">
     </div>

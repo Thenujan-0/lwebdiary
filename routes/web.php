@@ -18,14 +18,19 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class,"index"])->name("index");
-Route::post('/writeDiary', [DiaryController::class,"writeDiary"])->name("writeDiary");
-
-Route::post("createFirstDiary",[HomeController::class,"createFirstDiary"]);
-
 Route::get("/login",[LoginController::class,"login"])->name("login");
 Route::get("/signup",[LoginController::class,"signup"])->name("signup");
+// Route::get("/test",function(){return view('includes.errorPopup');});
+
+Route::post('/writeDiary', [DiaryController::class,"writeDiary"])->name("writeDiary");
+Route::post("createFirstDiary",[HomeController::class,"createFirstDiary"]);
+Route::post("createDiary",[DiaryController::class,"createDiary"]);
 
 Route::post("loginUser",[LoginController::class,"loginUser"]);
 Route::post("registerUser",[LoginController::class,"registerUser"])->name("registerUser");
 
 Route::resource("/diaryEntry",DiaryEntryController::class);
+
+Route::post("/exportDiary",[DiaryController::class,"exportDiary"]);
+Route::post("/dateExists",[DiaryController::class,"dateExists"]);
+Route::post("/editDiaryData",[DiaryController::class,"editDiaryData"]);

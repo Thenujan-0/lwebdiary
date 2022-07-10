@@ -4,10 +4,21 @@ $(document).ready(function(){
     form.ajaxForm({
 
         complete:function(response){
-            console.log(response.reponseText)
-            window.location.reload()
+            console.log(response)
+            // window.location.reload()
+            if (response.responseText!=""){
+                form.find(".btnCancel").click()
+            }
             
         }
+    })
+
+    //Add create diary button callback
+    $(".btnCreateDiary").click(function(){
+        let overlay=$("#darkOverlay")
+        let form =$("#formCreateDiary")
+        form.css("display","flex")
+        overlay.css("display","block")
     })
 
     function removeForm(){
@@ -19,5 +30,4 @@ $(document).ready(function(){
 
     //Add btnCancel callback
     form.find(".btnCancel").click(removeForm)
-    form.find("input[type=submit]").click(removeForm)
 })

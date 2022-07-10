@@ -10,12 +10,21 @@
 }
 
 
-.anchor{
+a{
     text-decoration:none;
     color:$anchor-color;
     text-decoration: underline;
+    font-weight: 600;
 }
 
 .nodisplay{
     display:hidden;
+}
+
+
+.btn.btnSecondary{
+    
+    background:white;
+    border:1px solid $secondary-color;
+    color:$secondary-color;
 }

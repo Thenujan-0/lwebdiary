@@ -3,6 +3,8 @@ var __webpack_exports__ = {};
 /*!*******************************!*\
   !*** ./resources/js/index.js ***!
   \*******************************/
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 $(document).ready(function () {
   var main = $(".main"); //Add btnWriteEntry callback
 
@@ -14,18 +16,28 @@ $(document).ready(function () {
 
   function unHideWriteInline() {
     $(".btnWriteInline").css("display", "inline");
-  }
+  } //The following variable is used to know if a request to setDiary data is already pending
+
+
+  window.pendingsetDiaryDataReq = false;
 
   function setDiaryData() {
+    //If already a request is pending don't send another one
+    if (window.pendingsetDiaryDataReq) {
+      console.log("pending diary Data request");
+      return;
+    }
+
+    window.pendingsetDiaryDataReq = true;
     var selectedDiary_ = $(".btnDiary.selected").html();
     console.log("selectedDiary", selectedDiary_);
     var data = {
-      action: "getDiaryData",
       date: $(".btnDate.selected").html(),
       selectedDiary: selectedDiary_
     };
     $.get("diaryEntry/show", data, function (response) {
-      console.log(response, "resp");
+      // console.log(response,"resp")
+      window.pendingsetDiaryDataReq = false;
 
       if (response != "") {
         $(".diaryData").html(response);
@@ -37,12 +49,28 @@ $(document).ready(function () {
   } //sets the diary data for last date 
 
 
-  setDiaryData(); //Add btnDate callback
+  setDiaryData();
+
+  function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:	application/json;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  } //Add btnDate callback
+
 
   function btnDateCallback() {
-    var date = $(this).html();
-    console.log(date); // $("#selectedDate").val(date)
-    //Remove selected from date (technically there should only be one)
+    var date = $(this).html(); //Last selected date
+
+    var lastSelDate = $('.btnDate.selected').html();
+
+    if (lastSelDate == date) {
+      return;
+    } //Remove selected from date (technically there should only be one)
+
 
     $(".btnDate.selected").removeClass("selected");
     $(this).addClass("selected");
@@ -67,33 +95,35 @@ $(document).ready(function () {
     var selectedDiary_ = $(".btnDiary.selected").html();
     var textData = $("p.diaryData").text(); //check if it is empty by checking 
     //If it has an inline write button,
+    //If it does then we are ediing an empty entry
 
-    if ($(".btnWriteInline").length) {
+    if ($(".btnWriteInline").length > 0) {
       //We have to do some processing to remove the inline write button from the text
       textData = textData.substr(0, textData.length - 5);
       console.log(textData);
       var data = {
-        action: "writeDiaries",
-        selectedDiaries: [selectedDiary_],
+        _token: token,
+        selectedDiaries: selectedDiary_,
         data: textData,
-        date: $(".btnDate.selected").html()
+        date: $(".btnDate.selected").html(),
+        allowDuplicateDates: true
       };
       console.log(selectedDiary_, textData, data); //todo
 
-      $.post("diaryEntry/update", data, function (response) {
+      $.post("writeDiary", data, function (response) {
         console.log(response);
         setDiaryData();
-      });
+      }); //If it is not > 0, we are editing an existing entry
     } else {
       console.log(textData);
       var _data = {
-        action: "editDiaryData",
         selectedDiary: selectedDiary_,
         data: textData,
+        _token: token,
         date: $(".btnDate.selected").html()
       };
       console.log(selectedDiary_, textData, _data);
-      $.post("libs/ajax.inc.php", _data, function (response) {
+      $.post("editDiaryData", _data, function (response) {
         console.log(response);
         setDiaryData();
       });
@@ -128,13 +158,6 @@ $(document).ready(function () {
         console.log("reloaded");
       }
     });
-  }); //Add create diary button callback
-
-  $(".btnCreateDiary").click(function () {
-    var overlay = $("#darkOverlay");
-    var form = $("#formCreateDiary");
-    form.css("display", "flex");
-    overlay.css("display", "block");
   }); //Add btnDiary callback
 
   main.find(".btnDiary").click(function () {
@@ -164,6 +187,30 @@ $(document).ready(function () {
       form.css("display", "none");
       darkOverlay.css("display", "none");
     }
+  }); //Add btnExport callback
+
+  $("#btnExport").click(function () {
+    var data = {
+      _token: token
+    };
+    $.post("exportDiary", data, function (response) {
+      console.log(response);
+      console.log(_typeof(response));
+      download("teraDiaryExport.json", response); //todo remove this
+      // window.open(response)
+    });
+  }); //Add btnImport callback
+
+  $("#btnImport").click(function () {
+    $("#importFileInput").click();
+  }); //Add importFileInput callback
+
+  $("#importFileInput").change(function (event) {
+    var files = event.target.files;
+    var file = files[0];
+    console.log(file.name);
+    console.log(file.type);
+    console.log($(this).val());
   });
 });
 /******/ })()

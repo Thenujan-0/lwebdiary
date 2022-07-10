@@ -2,6 +2,7 @@
 @import "colors";
 @import "mixins";
 @import "error";
+@import "components";
 
 *{
     margin:0;
@@ -38,6 +39,13 @@ form#formWriteDiary{
     ul{
         list-style-type: none;
         padding:0;
+        display:flex;
+        flex-wrap:wrap;
+
+        li{
+            margin: 5px 0;
+            margin-right:5px;
+        }
     }
 
     *{
@@ -61,16 +69,16 @@ form#formWriteDiary{
     }
 
 
-    button,.btnBack,div.btnDiary{
-        border:none;
-        outline:none;
-        border-radius: 5px;
-        background: #333;
-        color:white;
-        font-size:18px;
-        padding:5px 10px;
-        cursor:pointer;
-    }
+    // button,.btnBack,div.btnDiary{
+    //     border:none;
+    //     outline:none;
+    //     border-radius: 5px;
+    //     background: #333;
+    //     color:white;
+    //     font-size:18px;
+    //     padding:5px 10px;
+    //     cursor:pointer;
+    // }
     .btnAdd{
         // width:80px;
         background:$primary-color;
@@ -80,9 +88,7 @@ form#formWriteDiary{
 
     .btnBack{
         margin-right:30px;
-        background:white;
-        border:1px solid $dark-primary-color;
-        color:$dark-primary-color;
+        
     }
 
     .btnAdd,.btnBack{
