@@ -1,7 +1,7 @@
 @extends("layouts.app")
     
 @section("head")
-    <link rel="stylesheet" href="{{asset("css/signup-login.css")}}">
+    <link rel="stylesheet" href="{{secure_asset("css/signup-login.css")}}">
     {{-- <script src="js/login.js"></script> --}}
     <title>Login WebDiary</title>
 @endsection
@@ -10,7 +10,7 @@
 
     <div class="cont">
         <div class="main">
-            <img src="{{asset('images/brand_name.svg')}}" >
+            <img src="{{secure_asset('images/brand_name.svg')}}" >
             <form id="loginForm" method="POST" enctype="multipart-form-data" action="loginUser">
                 @csrf
             <fieldset>
