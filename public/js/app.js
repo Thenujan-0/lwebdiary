@@ -19421,6 +19421,19 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/assets/sass/createDiary.scss":
+/*!************************************************!*\
+  !*** ./resources/assets/sass/createDiary.scss ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/assets/sass/errorPopup.scss":
 /*!***********************************************!*\
   !*** ./resources/assets/sass/errorPopup.scss ***!
@@ -19460,6 +19473,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/assets/sass/smallIndex.scss":
+/*!***********************************************!*\
+  !*** ./resources/assets/sass/smallIndex.scss ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/assets/sass/signup-login.scss":
 /*!*************************************************!*\
   !*** ./resources/assets/sass/signup-login.scss ***!
@@ -19490,19 +19516,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/assets/sass/writeDiary.scss ***!
   \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/assets/sass/createDiary.scss":
-/*!************************************************!*\
-  !*** ./resources/assets/sass/createDiary.scss ***!
-  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -19844,10 +19857,11 @@ process.umask = function() { return 0; };
 /******/ 			"css/createFirstDiary": 0,
 /******/ 			"css/signup-login": 0,
 /******/ 			"css/index": 0,
-/******/ 			"css/createDiary": 0,
 /******/ 			"css/writeDiary": 0,
+/******/ 			"css/smallIndex": 0,
 /******/ 			"css/app": 0,
-/******/ 			"css/errorPopup": 0
+/******/ 			"css/errorPopup": 0,
+/******/ 			"css/createDiary": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -19897,14 +19911,15 @@ process.umask = function() { return 0; };
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/assets/sass/index.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/assets/sass/signup-login.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/assets/sass/createFirstDiary.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/assets/sass/writeDiary.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/assets/sass/createDiary.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/assets/sass/errorPopup.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/createDiary","css/writeDiary","css/app","css/errorPopup"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/index.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/smallIndex.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/signup-login.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/createFirstDiary.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/writeDiary.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/createDiary.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/assets/sass/errorPopup.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/createFirstDiary","css/signup-login","css/index","css/writeDiary","css/smallIndex","css/app","css/errorPopup","css/createDiary"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

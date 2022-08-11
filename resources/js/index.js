@@ -17,22 +17,33 @@ $(document).ready(function(){
     //The following variable is used to know if a request to setDiary data is already pending
     window.pendingsetDiaryDataReq=false;
     function setDiaryData(){
-
+        addSkeleton()
+        // console.log("added skeleton")
         //If already a request is pending don't send another one
-        if (window.pendingsetDiaryDataReq){
-            console.log("pending diary Data request")
-            return;
-        }
-        window.pendingsetDiaryDataReq=true;
+        // if (window.pendingsetDiaryDataReq){
+        //     console.log("pending diary Data request")
+        //     return;
+        // }
 
 
 
         let selectedDiary_= $(".btnDiary.selected").html()
-        console.log("selectedDiary",selectedDiary_)
-        let data = {date:$(".btnDate.selected").html(),selectedDiary:selectedDiary_}
+        let selectedDate=$(".btnDate.selected").html()
+        // console.log("selectedDiary",selectedDiary_)
+        let data = {date:selectedDate,selectedDiary:selectedDiary_}
         $.get("diaryEntry/show",data,function (response){
             // console.log(response,"resp")
-            window.pendingsetDiaryDataReq=false;
+            let currSelectedDiary= $(".btnDiary.selected").html()
+            let currselectedDate=$(".btnDate.selected").html()
+
+
+            //If the selected diary is not the same as the one this request was sent for, don't show the data
+            if (data["selectedDiary"]!=currSelectedDiary || data["date"]!=currselectedDate){
+                console.log(data["selectedDiary"],currSelectedDiary,data["date"],currselectedDate)
+                return;
+            }
+            console.log("No")
+            console.log(data["selectedDiary"],currSelectedDiary,data["date"],currselectedDate)
 
             if(response!=""){
                 $(".diaryData").html(response)
@@ -40,7 +51,9 @@ $(document).ready(function(){
                 $(".diaryData").html("Nothing written here :( <button class='btn btnWriteInline'>Write</button>")
                 addBtnWriteInlineListener()
             }
+            removeSkeleton()
         })
+        // console.log("removed skeleton")
     }
 
     //sets the diary data for last date 
@@ -173,11 +186,11 @@ $(document).ready(function(){
 
     //Add btnDiary callback
     main.find(".btnDiary").click(function(){
-        if(!$(this).hasClass("selected")){
-            $(".btnDiary.selected").removeClass("selected")
-            $(this).addClass("selected")
-            setDiaryData()
-        }
+        // if(!$(this).hasClass("selected")){
+        //     $(".btnDiary.selected").removeClass("selected")
+        //     $(this).addClass("selected")
+        //     setDiaryData()
+        // }
     });
 
     function addBtnWriteInlineListener(){
@@ -231,6 +244,19 @@ $(document).ready(function(){
         console.log($(this).val())
     })
     
+
+
+
+function addSkeleton(){
+    $("div.diaryDataSkeletons").css("display","block")
+    $("p.diaryData").css("display","none")
+}
+function removeSkeleton(){
+    $("div.diaryDataSkeletons").css("display","none")
+    $("p.diaryData").css("display","inline")
+}
+
+
 
 
 })

@@ -12,17 +12,19 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ])
     .js('resources/js/index.js', 'public/js')
     .js('resources/js/writeDiary.js', 'public/js')
     .js('resources/js/createDiary.js', 'public/js')
     .js('resources/js/errorPopup.js', 'public/js')
+    .js('resources/js/simple.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css', [
+        //
+    ])
     
     ;
 
 mix.sass('resources/assets/sass/index.scss', 'public/css')
+    .sass('resources/assets/sass/smallIndex.scss', 'public/css')
     .sass('resources/assets/sass/signup-login.scss', 'public/css')
     .sass('resources/assets/sass/createFirstDiary.scss', 'public/css')
     .sass('resources/assets/sass/writeDiary.scss', 'public/css')

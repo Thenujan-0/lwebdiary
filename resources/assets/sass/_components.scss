@@ -21,6 +21,9 @@ a{
     display:hidden;
 }
 
+.btnPrimary{
+    background:$primary-color;
+}
 
 .btn.btnSecondary{
     
@@ -28,3 +31,4 @@ a{
     border:1px solid $secondary-color;
     color:$secondary-color;
 }
+

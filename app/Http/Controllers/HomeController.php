@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\DiaryName;
 use App\Models\UserEmptyDiary;
 use App\Models\DiaryEntry;
+use Debugbar;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,21 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     public function index(){
+
+        //First check if screen size is set in cookie if not send js that sets screensize cookie and then reloads
+        DebugBar::warning("HomeController::index()",Cookie::has("screenSize"),Cookie::get("screenSize"));
+        if(!Cookie::has("screenSize")){
+            DebugBar::warning("cookie not found",Cookie::has("screenSize"));
+
+            return view('includes.setScreenSize');
+        }
+        $screenSize=Cookie::get("screenSize");
+        Cookie::queue(Cookie::forget("screenSize"));
+        // echo Cookie::get("screenSize");
+        // echo "\n";
+        // echo Cookie::has("screenSize");
+
+        // echo $screenSize;
 
 
         
@@ -60,6 +76,11 @@ class HomeController extends Controller
         $firstName=explode(" ",DB::table("users")->where("id",$user_id)->first("name")->name)[0];
         // dd($firstName);
         // dd($dates);
+
+        if ($screenSize<=500){
+            return view("smallScreen.index",compact("diaryNames","dates","firstName"));
+        }
+
         return view("index",compact("dates","firstName","diaryNames"));
         
     }
@@ -95,5 +116,12 @@ class HomeController extends Controller
 
         // return redirect()->route("index");
 
+    }
+
+    public function setScreenSize(Request $request){
+        DebugBar::warning("yes recv");
+        $request->validate([]);
+        $screenSize = $request->input("screenSize");
+        Cookie::queue("screenSize",$screenSize,60*24*30);
     }
 }

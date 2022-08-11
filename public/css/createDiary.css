@@ -13,15 +13,12 @@ form#formCreateDiary {
 form#formCreateDiary input[type=text] {
   width: 500px;
   margin: 10px 0;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  padding: 4px;
   font-size: 18px;
 }
 form#formCreateDiary input[type=submit], form#formCreateDiary input[type=button] {
   width: 150px;
-  background-color: #2CFFF2;
-  color: black;
-}
-form#formCreateDiary input[type=button].btnCancel {
-  background: #666;
-  color: white;
+  margin-right: 20px;
 }

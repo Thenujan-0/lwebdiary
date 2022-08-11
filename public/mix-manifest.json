@@ -4,11 +4,13 @@
     "/js/writeDiary.js": "/js/writeDiary.js",
     "/js/createDiary.js": "/js/createDiary.js",
     "/js/errorPopup.js": "/js/errorPopup.js",
+    "/js/simple.js": "/js/simple.js",
     "/css/createFirstDiary.css": "/css/createFirstDiary.css",
     "/css/signup-login.css": "/css/signup-login.css",
     "/css/index.css": "/css/index.css",
-    "/css/createDiary.css": "/css/createDiary.css",
     "/css/writeDiary.css": "/css/writeDiary.css",
+    "/css/smallIndex.css": "/css/smallIndex.css",
     "/css/app.css": "/css/app.css",
-    "/css/errorPopup.css": "/css/errorPopup.css"
+    "/css/errorPopup.css": "/css/errorPopup.css",
+    "/css/createDiary.css": "/css/createDiary.css"
 }

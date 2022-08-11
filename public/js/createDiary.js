@@ -7,11 +7,13 @@ $(document).ready(function () {
   var form = $("#formCreateDiary");
   form.ajaxForm({
     complete: function complete(response) {
-      console.log(response); // window.location.reload()
+      console.log(response, "response of create diary"); // window.location.reload()
 
       if (response.responseText != "") {
         form.find(".btnCancel").click();
       }
+
+      window.location.reload();
     }
   }); //Add create diary button callback
 

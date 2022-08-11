@@ -3,8 +3,13 @@
 use App\Http\Controllers\DiaryController;
 use App\Http\Controllers\DiaryEntryController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
+use Barryvdh\Debugbar\Facades\Debugbar;
+
+// use Debugbar;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +32,12 @@ Route::post("createFirstDiary",[HomeController::class,"createFirstDiary"]);
 Route::post("createDiary",[DiaryController::class,"createDiary"]);
 
 Route::post("loginUser",[LoginController::class,"loginUser"]);
+// Route::post("loginUser",function(Request $request){
+//     Debugbar::warning("loginUser");
+//     $request->validate(["hey"=>"required"]);
+//     // $screenSize = $request->input("hey");
+
+// });
 Route::post("registerUser",[LoginController::class,"registerUser"])->name("registerUser");
 
 Route::resource("/diaryEntry",DiaryEntryController::class);
@@ -34,3 +45,6 @@ Route::resource("/diaryEntry",DiaryEntryController::class);
 Route::post("/exportDiary",[DiaryController::class,"exportDiary"]);
 Route::post("/dateExists",[DiaryController::class,"dateExists"]);
 Route::post("/editDiaryData",[DiaryController::class,"editDiaryData"]);
+
+
+Route::post("simple",[HomeController::class,"setScreenSize"]);

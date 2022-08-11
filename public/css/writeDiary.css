@@ -121,6 +121,10 @@ a {
   display: hidden;
 }
 
+.btnPrimary {
+  background: #2CFFF2;
+}
+
 .btn.btnSecondary {
   background: white;
   border: 1px solid rgb(0, 172, 172);
@@ -157,15 +161,10 @@ form#formWriteDiary .inputGroup {
   flex-shrink: 0;
   margin-bottom: 20px;
 }
-form#formWriteDiary ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-}
-form#formWriteDiary ul li {
-  margin: 5px 0;
-  margin-right: 5px;
+form#formWriteDiary select {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 form#formWriteDiary * {
   font-size: 18px;

@@ -36,17 +36,21 @@ form#formWriteDiary{
         margin-bottom: 20px;
     }
 
-    ul{
-        list-style-type: none;
-        padding:0;
-        display:flex;
-        flex-wrap:wrap;
-
-        li{
-            margin: 5px 0;
-            margin-right:5px;
-        }
+    select{
+        width:fit-content;
     }
+
+    // ul{
+    //     list-style-type: none;
+    //     padding:0;
+    //     display:flex;
+    //     flex-wrap:wrap;
+
+    //     li{
+    //         margin: 5px 0;
+    //         margin-right:5px;
+    //     }
+    // }
 
     *{
         font-size: 18px;

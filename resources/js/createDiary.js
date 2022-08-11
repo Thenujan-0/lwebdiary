@@ -4,11 +4,12 @@ $(document).ready(function(){
     form.ajaxForm({
 
         complete:function(response){
-            console.log(response)
+            console.log(response,"response of create diary")
             // window.location.reload()
             if (response.responseText!=""){
                 form.find(".btnCancel").click()
             }
+            window.location.reload()
             
         }
     })

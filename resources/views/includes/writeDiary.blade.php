@@ -15,18 +15,23 @@
 
     <div class="inputGroup selectedDiaries" >
         <label>Select diaries to add this entry to</label>
-        <ul>
+        <select name="diaryName" id="">
+            @foreach($diaryNames as $diary)
+                    <option value="{{$diary}}">{{$diary}}</option>
+            @endforeach
+        </select>
+        {{-- <ul>
 
         
             @foreach($diaryNames as $diary)
-                <li><div class='btnDiary'>
+                <li><div class='btn btnDiary'>
                         <p>{{$diary}}</p>
                     </div>
                 </li>
             @endforeach
             
 
-        </ul>
+        </ul> --}}
         <div class="error animDance" style="visibility:hidden;">
             <p class="errorMsg"></p>
         </div>

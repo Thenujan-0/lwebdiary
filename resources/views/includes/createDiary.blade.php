@@ -8,8 +8,8 @@
             <p class="errorMsg"></p>
         </div>
     <div class="btnGroup">
-        <input type="button" class="btn btnCancel" value="Cancel">
+        <input type="button" class="btn btnCancel btnSecondary" value="Cancel">
         
-        <input type="submit" class="btn" value="Create">
+        <input type="submit" class="btn btnPrimary" value="Create">
     </div>
 </form>

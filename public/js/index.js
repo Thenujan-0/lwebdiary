@@ -22,22 +22,32 @@ $(document).ready(function () {
   window.pendingsetDiaryDataReq = false;
 
   function setDiaryData() {
+    addSkeleton(); // console.log("added skeleton")
     //If already a request is pending don't send another one
-    if (window.pendingsetDiaryDataReq) {
-      console.log("pending diary Data request");
-      return;
-    }
+    // if (window.pendingsetDiaryDataReq){
+    //     console.log("pending diary Data request")
+    //     return;
+    // }
 
-    window.pendingsetDiaryDataReq = true;
     var selectedDiary_ = $(".btnDiary.selected").html();
-    console.log("selectedDiary", selectedDiary_);
+    var selectedDate = $(".btnDate.selected").html(); // console.log("selectedDiary",selectedDiary_)
+
     var data = {
-      date: $(".btnDate.selected").html(),
+      date: selectedDate,
       selectedDiary: selectedDiary_
     };
     $.get("diaryEntry/show", data, function (response) {
       // console.log(response,"resp")
-      window.pendingsetDiaryDataReq = false;
+      var currSelectedDiary = $(".btnDiary.selected").html();
+      var currselectedDate = $(".btnDate.selected").html(); //If the selected diary is not the same as the one this request was sent for, don't show the data
+
+      if (data["selectedDiary"] != currSelectedDiary || data["date"] != currselectedDate) {
+        console.log(data["selectedDiary"], currSelectedDiary, data["date"], currselectedDate);
+        return;
+      }
+
+      console.log("No");
+      console.log(data["selectedDiary"], currSelectedDiary, data["date"], currselectedDate);
 
       if (response != "") {
         $(".diaryData").html(response);
@@ -45,7 +55,9 @@ $(document).ready(function () {
         $(".diaryData").html("Nothing written here :( <button class='btn btnWriteInline'>Write</button>");
         addBtnWriteInlineListener();
       }
-    });
+
+      removeSkeleton();
+    }); // console.log("removed skeleton")
   } //sets the diary data for last date 
 
 
@@ -160,12 +172,11 @@ $(document).ready(function () {
     });
   }); //Add btnDiary callback
 
-  main.find(".btnDiary").click(function () {
-    if (!$(this).hasClass("selected")) {
-      $(".btnDiary.selected").removeClass("selected");
-      $(this).addClass("selected");
-      setDiaryData();
-    }
+  main.find(".btnDiary").click(function () {// if(!$(this).hasClass("selected")){
+    //     $(".btnDiary.selected").removeClass("selected")
+    //     $(this).addClass("selected")
+    //     setDiaryData()
+    // }
   });
 
   function addBtnWriteInlineListener() {
@@ -212,6 +223,16 @@ $(document).ready(function () {
     console.log(file.type);
     console.log($(this).val());
   });
+
+  function addSkeleton() {
+    $("div.diaryDataSkeletons").css("display", "block");
+    $("p.diaryData").css("display", "none");
+  }
+
+  function removeSkeleton() {
+    $("div.diaryDataSkeletons").css("display", "none");
+    $("p.diaryData").css("display", "inline");
+  }
 });
 /******/ })()
 ;
