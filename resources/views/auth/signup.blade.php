@@ -1,6 +1,7 @@
 @extends("layouts.app")
 
 @section("head")
+<<<<<<< HEAD
     @env("local")
         <link rel="stylesheet" href="{{asset("css/signup-login.css")}}">
 
@@ -10,6 +11,9 @@
         <link rel="stylesheet" href="{{secure_asset("css/signup-login.css")}}">
 
     @endproduction
+=======
+    <link rel="stylesheet" href="{{secure_asset("css/signup-login.css")}}">
+>>>>>>> 15c3a9b2d6b9324ecae163459bd2eeb2c5fa4d73
     <script src="js/signup.js"></script>
     <title>Signup WebDiary</title>
 @endsection
@@ -17,6 +21,7 @@
 @section("content")
     <div class="cont">
         <div class="main">
+<<<<<<< HEAD
             @env("local")
                 <img src="{{asset('images/brand_name.svg')}}" >
 
@@ -26,6 +31,9 @@
                 <img src="{{secure_asset('images/brand_name.svg')}}" >
 
             @endproduction
+=======
+            <img src="{{secure_asset('images/brand_name.svg')}}" >
+>>>>>>> 15c3a9b2d6b9324ecae163459bd2eeb2c5fa4d73
             <form id="signupForm" method="POST" action="{{route('registerUser')}}" enctype="multipart/form-data">
                 <fieldset>
                 @csrf   

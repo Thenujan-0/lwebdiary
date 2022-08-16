@@ -1,6 +1,6 @@
 @extends('layouts.app')
     @section('head')
-    <link rel="stylesheet" href="{{asset('css/index.css')}}">
+    <link rel="stylesheet" href="{{secure_asset('css/index.css')}}">
     <script>
         var token ="{{ csrf_token() }}";
     </script>
