@@ -95,11 +95,11 @@ $sidebarWidthM:150px;
     // display: flex;
     // flex-direction: column;
     #diaryNamesBar{
-        white-space: nowrap;
         max-width:100%;
-        overflow-y:visible;
         display:flex;
         align-items: center;
+        flex-wrap:wrap;
+
 
         select.diaryNames{
             display: none;
@@ -182,6 +182,7 @@ $sidebarWidthM:150px;
         padding:10px 15px;
         margin:10px;
         color:$secondary-color;
+        white-space: nowrap;
 
         &:hover{
             border:2px solid $secondary-color;
@@ -197,7 +198,7 @@ $sidebarWidthM:150px;
     }
 
     .diaryDataHeader,.diaryDataWrapper{
-        width:clamp(300px , 100%, 1200px);
+        width:clamp(200px , 100%, 1200px);
     }
 
     .diaryDataHeader{
@@ -260,6 +261,7 @@ $sidebarWidthM:150px;
                 // background:#e67e22;
                 // color:white;
                 margin:10px;
+
             }
             .btnDel{
                 // background:#ff3f34;
@@ -312,6 +314,9 @@ $sidebarWidthM:150px;
         margin-left:100px;
         @media screen  and (max-width:600px){
             margin-left:20px;
+        }
+        @media screen  and (max-width:400px){
+            margin-left:5px;
         }
         .btn{
             background:none;
