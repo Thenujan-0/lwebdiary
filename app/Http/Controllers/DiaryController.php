@@ -7,9 +7,10 @@ use App\Models\DiaryName;
 use App\Models\UserEmptyDiary;
 use Illuminate\Http\Request;
 use Debugbar;
+use Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 class DiaryController extends Controller
 {
     public function writeDiary(Request $request){
@@ -144,27 +145,34 @@ class DiaryController extends Controller
     }
 
     public function getEmptyDiaryNames(Request $request){
-        $user_id=Session::get("user_id");
-        $date=$request->date;
-        $out =DiaryEntry::where(["user_id"=>$user_id,"date"=>$date])->distinct()->get("diary_name_id");
+        try{
+            $user_id=Session::get("user_id");
+            $date=$request->date;
+            $out =DiaryEntry::where(["user_id"=>$user_id,"date"=>$date])->distinct()->get("diary_name_id");
 
-        $nonEmptyDiaries=[];
-        foreach($out as $o){
-            array_push($nonEmptyDiaries,$o->diaryName());
+            $nonEmptyDiaries=[];
+            foreach($out as $o){
+                array_push($nonEmptyDiaries,$o->diaryName());
+            }
+            $out = json_encode($nonEmptyDiaries);
+
+            $allDiaries= DiaryController::getDiaryNames($user_id);
+
+            foreach($nonEmptyDiaries as $nonEmptyDiary){
+                $key=array_search($nonEmptyDiary,$allDiaries);
+                unset($allDiaries[$key]);
+            }
+
+            $emptyDiaries=json_encode(array_values($allDiaries));
+            Debugbar::warning($emptyDiaries);
+
+            return response($emptyDiaries);
+        }catch (Exception $e){
+            Log::info("An error occured in get non empty diaries");
+            Log::info($e->getMessage());
+            echo $e->getMessage();
+            return response($e->getMessage(),200);
         }
-        $out = json_encode($nonEmptyDiaries);
-
-        $allDiaries= DiaryController::getDiaryNames($user_id);
-
-        foreach($nonEmptyDiaries as $nonEmptyDiary){
-            $key=array_search($nonEmptyDiary,$allDiaries);
-            unset($allDiaries[$key]);
-        }
-
-        $emptyDiaries=json_encode(array_values($allDiaries));
-        Debugbar::warning($emptyDiaries);
-
-        return response($emptyDiaries);
     }
 
     public function importDiary(Request $request){

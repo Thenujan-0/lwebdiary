@@ -24,9 +24,9 @@
 
             @endenv
 
-            @production
+            @env("heroku")
                 <img src="{{secure_asset('images/brand_name.svg')}}" >
-            @endproduction
+            @endenv
 
             <form id="loginForm" method="POST" enctype="multipart-form-data" action="loginUser">
                 @csrf
