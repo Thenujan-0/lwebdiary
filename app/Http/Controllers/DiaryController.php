@@ -8,6 +8,7 @@ use App\Models\UserEmptyDiary;
 use Illuminate\Http\Request;
 use Debugbar;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class DiaryController extends Controller
 {
@@ -47,7 +48,7 @@ class DiaryController extends Controller
             array_push($diaryNames,$diary->diaryName->diary_name);
         }
 
-        $emptyDiaryList=UserEmptyDiary::where("user_id",$user_id)->distinct("diary_name_id")->get();
+        $emptyDiaryList=UserEmptyDiary::where("user_id",$user_id)->distinct()->get("diary_name_id");
 
         foreach($emptyDiaryList as $diary){
             array_push($diaryNames,$diary->diaryName->diary_name);
@@ -110,6 +111,89 @@ class DiaryController extends Controller
         $diaryId=DiaryName::where("diary_name",$selectedDiary)->first()->id;
 
         DiaryEntry::where(["user_id"=>$user_id,"date"=>$date,"diary_name_id"=>$diaryId])->update(["data"=>$data]);
+        return response("true",200);
+    }
+
+    public static function getDiaryNames($user_id){
+        $emptyDiaryNameIds=UserEmptyDiary::where("user_id",$user_id)->get()->pluck("diary_name_id");
+        // dd(($diaryNameIds));
+
+        //Check if there is only one or more and do the operations suitable for that to get the emptyDiarynames
+        if(count($emptyDiaryNameIds)>1){
+            $diaryNames=DB::table("diary_names")->whereIn("id",$emptyDiaryNameIds)->get()->pluck("diary_name")->toArray();
+        }else{
+            // dd($diaryNameIds[0]);
+            $diaryNames=Array();
+            $name=DB::table("diary_names")->where("id",$emptyDiaryNameIds[0])->first("diary_name")->diary_name;
+            // dd($name);
+            array_push($diaryNames,$name);
+        }
+
+        //Todo get the nonempty diaries
+
+        $nonEmptyDiaries=DiaryEntry::where("user_id",$user_id)->distinct("diary_name_id")->get();
+        foreach($nonEmptyDiaries as $diary){
+            $diaryName=$diary->diaryName();
+            if (!in_array($diaryName,$diaryNames)){
+                debugBar::warning($diaryName);
+                array_push($diaryNames,$diaryName);
+
+            }
+        }
+        return $diaryNames;
+    }
+
+    public function getEmptyDiaryNames(Request $request){
+        $user_id=Session::get("user_id");
+        $date=$request->date;
+        $out =DiaryEntry::where(["user_id"=>$user_id,"date"=>$date])->distinct()->get("diary_name_id");
+
+        $nonEmptyDiaries=[];
+        foreach($out as $o){
+            array_push($nonEmptyDiaries,$o->diaryName());
+        }
+        $out = json_encode($nonEmptyDiaries);
+
+        $allDiaries= DiaryController::getDiaryNames($user_id);
+
+        foreach($nonEmptyDiaries as $nonEmptyDiary){
+            $key=array_search($nonEmptyDiary,$allDiaries);
+            unset($allDiaries[$key]);
+        }
+
+        $emptyDiaries=json_encode(array_values($allDiaries));
+        Debugbar::warning($emptyDiaries);
+
+        return response($emptyDiaries);
+    }
+
+    public function importDiary(Request $request){
+        $user_id=Session::get("user_id");
+        $fileData=$request->get("fileData");
+        Debugbar::warning($fileData);
+        $json =json_decode($fileData,true);
+        Debugbar::warning($json);
+
+        foreach($json as $jsonObj){
+            $date=$jsonObj["date"];
+            $diaryName=$jsonObj["diary_name"];
+
+            $diaryNameRecord =DiaryName::where("diary_name",$diaryName)->first();
+            if ($diaryNameRecord == null){
+                $diaryName = DiaryName::firstOrCreate(["diary_name"=>$diaryName]);
+                $diaryName->save();
+                $diaryId=$diaryName->id;
+            }else{
+                $diaryId=$diaryNameRecord->id;
+
+            }
+            $data=$jsonObj["data"];
+            Debugbar::warning($data);
+            $diaryEntry=DiaryEntry::firstOrCreate(["user_id"=>$user_id,"date"=>$date,"diary_name_id"=>$diaryId,"data"=>$data]);
+            
+            $diaryEntry->save();
+        }
+
         return response("true",200);
     }
 }

@@ -70,16 +70,17 @@ form{
 
         border-radius: 10px;
         border:1px solid rgba(0,0,0,0.2);
-        padding:30px 20px;
+        padding:40px 30px;
     }
 
-    h1{
+    h2{
         margin:30px 0;
         font-size:22px;
+        font-weight:normal;
     }
 
     label,p,input{
-        color:rgba(0,0,0,0.9)
+        color:rgba(0,0,0,0.8)
     }
 
     input{

@@ -16,7 +16,7 @@ body{
 
 
 form#formWriteDiary{
-    width:700px;
+    width:clamp(200px,80%,700px);
     position:absolute;
     top:50%;
     left:50%;
@@ -38,6 +38,10 @@ form#formWriteDiary{
 
     select{
         width:fit-content;
+        border:1px solid rgba(0,0,0,0.9);
+        padding:2px;
+        background:white;
+        border-radius:2px;
     }
 
     // ul{

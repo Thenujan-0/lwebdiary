@@ -1,7 +1,16 @@
-    
-<link rel="stylesheet" href="{{asset("css/writeDiary.css")}}">
 
+
+
+@env("local")
+<link rel="stylesheet" href="{{asset("css/writeDiary.css")}}">
 <script src="{{asset("js/writeDiary.js")}}"></script>
+@endenv
+
+@production
+    <link rel="stylesheet" href="{{secure_asset("css/writeDiary.css")}}">
+    <script src="{{secure_asset("js/writeDiary.js")}}"></script>
+@endproduction
+
 <form action="diaryEntry/create" id="formWriteDiary" enctype="multipart/form-data" method="put" style="display:none;">
     @csrf
     {{-- <input type="button" id="btnBackWriteDiary" value='Back'> --}}
@@ -14,7 +23,7 @@
     </div>
 
     <div class="inputGroup selectedDiaries" >
-        <label>Select diaries to add this entry to</label>
+        <label>Select diary to add this entry to</label>
         <select name="diaryName" id="">
             @foreach($diaryNames as $diary)
                     <option value="{{$diary}}">{{$diary}}</option>

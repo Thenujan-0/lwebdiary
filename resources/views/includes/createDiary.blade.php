@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="{{asset('css/createDiary.css')}}">
-<script src="{{asset('js/createDiary.js')}}"></script>
+@env("local")
+    <script src="{{asset('js/createDiary.js')}}"></script>
+@endenv
+
+@production
+    <script src="{{secure_asset('js/createDiary.js')}}"></script>
+@endproduction
 <form action="createDiary" method="post" id="formCreateDiary" enctype="multipart/form-data" style="display:none">
     @csrf
     <label>Enter the name of new diary</label>

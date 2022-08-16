@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset("css/createFirstDiary.css")}}">
-    <script src="js/createFirstDiary.js"></script>
+    @env("local")
+        <link rel="stylesheet" href="{{asset("css/createFirstDiary.css")}}">
+        <script src="{{asset('js/createFirstDiary.js')}}"></script>
+    @endenv
+    @production
+        <link rel="stylesheet" href="{{secure_asset("css/createFirstDiary.css")}}">
+        <script src="{{secure_asset('js/createFirstDiary.js')}}"></script>
+    @endproduction
     <title>Welcome</title>
 </head>
 <body>

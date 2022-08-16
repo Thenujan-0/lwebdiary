@@ -106,15 +106,20 @@ div.iGroupErrorWrapper {
   box-sizing: border-box;
 }
 
+body {
+  background: rgba(0, 0, 0, 0.03);
+}
+
 #createFirstDiary {
   position: absolute;
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
+  background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.3);
   font-family: "Roboto", sans-serif;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 #createFirstDiary form {
   display: flex;
@@ -144,10 +149,11 @@ div.iGroupErrorWrapper {
   border: 1px solid rgba(0, 0, 0, 0.6);
   outline: none;
   padding: 1px 5px;
-  border-radius: 2px;
+  border-radius: 5px;
+  padding: 5px;
 }
 #createFirstDiary p {
-  color: #333;
+  color: rgba(0, 0, 0, 0.5);
 }
 #createFirstDiary button {
   border: none;
@@ -156,5 +162,5 @@ div.iGroupErrorWrapper {
   font-size: 18px;
   background: #fff;
   border-radius: 5px;
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
 }

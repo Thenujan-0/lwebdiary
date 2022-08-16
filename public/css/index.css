@@ -7,6 +7,11 @@
   padding: 5px 10px;
   border-radius: 5px;
 }
+@media screen and (max-width: 600px) {
+  .btn {
+    font-size: 16px;
+  }
+}
 
 a {
   text-decoration: none;
@@ -20,13 +25,20 @@ a {
 }
 
 .btnPrimary {
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
 }
 
 .btn.btnSecondary {
   background: white;
   border: 1px solid rgb(0, 172, 172);
   color: rgb(0, 172, 172);
+}
+
+.select {
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 5px;
 }
 
 * {
@@ -58,6 +70,17 @@ a {
   height: 90vh;
   width: 200px;
 }
+@media screen and (max-width: 900px) {
+  #sideBar {
+    width: 150px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #sideBar {
+    position: absolute;
+    left: -150px;
+  }
+}
 #sideBar ul {
   list-style-type: none;
   padding: 0;
@@ -71,8 +94,8 @@ a {
   border-radius: 0;
 }
 #sideBar .btnDate.selected {
-  background: rgba(0, 238, 255, 0.2);
-  color: #0097bd;
+  background: #518c9b;
+  color: white;
 }
 
 #diaryContent {
@@ -84,6 +107,17 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+@media screen and (max-width: 900px) {
+  #diaryContent {
+    width: calc(100% - 150px);
+    padding: 20px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #diaryContent {
+    width: 100%;
+  }
 }
 #diaryContent #diaryNamesBar {
   white-space: nowrap;
@@ -97,10 +131,19 @@ a {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  font-size: 18px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  padding: 5px;
+}
+@media screen and (max-width: 500px) {
+  #diaryContent #diaryNamesBar select.diaryNames {
+    display: block;
+  }
+}
+#diaryContent #diaryNamesBar select#selectedDateInput {
+  display: none;
+}
+@media screen and (max-width: 500px) {
+  #diaryContent #diaryNamesBar select#selectedDateInput {
+    display: block;
+  }
 }
 #diaryContent #diaryNamesBar div.diaryNames {
   background: rgb(206, 206, 206);
@@ -108,26 +151,29 @@ a {
   padding: 5px;
   padding-bottom: 0;
 }
+@media screen and (max-width: 500px) {
+  #diaryContent #diaryNamesBar div.diaryNames {
+    display: none;
+  }
+}
 #diaryContent #diaryNamesBar .btnDiary {
-  font-size: 18px;
   margin: 10px;
   padding: 10px 15px;
   background: white;
-  border: none;
+  border: 2px solid white;
   border-radius: 15px;
-  cursor: pointer;
   color: black;
 }
 #diaryContent #diaryNamesBar .btnDiary:hover {
   border: 2px solid rgb(0, 172, 172);
   position: relative;
-  right: 2px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-right: 11px;
 }
-#diaryContent #diaryNamesBar .btnDiary .btnDiary.empty {
-  background: #999999;
+#diaryContent #diaryNamesBar .btnDiary.empty {
+  background: #dfdfdf;
+  border: 2px solid #dfdfdf;
+}
+#diaryContent #diaryNamesBar .btnDiary.selected {
+  border-bottom: 2px solid rgb(0, 172, 172);
 }
 #diaryContent #diaryNamesBar i {
   display: none;
@@ -154,8 +200,14 @@ a {
 }
 #diaryContent .diaryDataHeader {
   background: #D9D9D9;
-  padding: 40px;
+  padding: 20px;
   margin-top: 20px;
+  border-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 #diaryContent .diaryDataWrapper {
   margin: 10px;
@@ -164,12 +216,19 @@ a {
   padding: 40px;
   height: calc(80vh - 45px);
   border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   position: relative;
   border-top: 2px solid rgb(0, 172, 172);
 }
 #diaryContent .diaryDataWrapper p.diaryData {
   padding: 5px;
   height: 90%;
+}
+@media screen and (max-width: 600px) {
+  #diaryContent .diaryDataWrapper p.diaryData {
+    font-size: 14px;
+  }
 }
 #diaryContent .diaryDataWrapper .buttons {
   position: absolute;
@@ -180,53 +239,53 @@ a {
   align-items: center;
   margin-bottom: 10px;
 }
+#diaryContent .diaryDataWrapper .buttons .btn {
+  border-radius: 5px;
+  background: rgb(31, 171, 205);
+}
 #diaryContent .diaryDataWrapper .buttons .btnEdit {
-  background: #e67e22;
-  color: white;
   margin: 10px;
-  border-radius: 10px;
 }
-#diaryContent .diaryDataWrapper .buttons .btnDel {
-  background: #ff3f34;
-  color: white;
-  border-radius: 10px;
-}
-
 #topBar {
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
   height: 10vh;
   position: relative;
   filter: drop-shadow(0px 0px 10px black);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0 10px;
 }
 #topBar h1#brand-logo {
   font-weight: bold;
   color: white;
-  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
 }
-#topBar button#btnWriteEntry {
-  position: absolute;
-  top: 50%;
-  right: 2vw;
-  transform: translateY(-50%);
-  font-size: 20px;
-  text-decoration: none;
-  color: black;
-  background: white;
-  border-radius: 14px;
-  padding: 10px;
-  cursor: pointer;
-  border: 1px solid white;
+@media screen and (max-width: 600px) {
+  #topBar h1#brand-logo {
+    font-size: 25px;
+  }
+}
+#topBar .buttons {
+  margin-left: 100px;
+}
+@media screen and (max-width: 600px) {
+  #topBar .buttons {
+    margin-left: 20px;
+  }
+}
+#topBar .buttons .btn {
+  background: none;
+}
+#topBar .buttons .btn:hover {
+  color: white;
+  transition: color 0.3s;
 }
 
 .btn.btnWrite {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  background-color: #2CFFF2;
+  background-color: rgb(19, 114, 138);
   border-radius: 50%;
   padding: 30px 20px;
   z-index: 1;

@@ -10,7 +10,7 @@ use App\Models\Users_table;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Cookie;
-
+use Debugbar;
 class LoginController extends Controller
 {
     // public function loginUser(Request $request){
@@ -51,6 +51,7 @@ class LoginController extends Controller
         $data= User::get()->where("email",$name)->first();
 
         if (empty($data)){
+            DebugBar::warning("No account with email");
             return back()->withErrors(['main'=>'There is no account on this email address']);
         }
         

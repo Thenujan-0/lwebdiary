@@ -13,10 +13,10 @@ class DiaryEntry extends Model
     use HasFactory;
     public $timestamps=false;
     protected $table="diary_entries";
-
-    protected $hidden=["user_id"];
+    protected $fillable=["user_id","date","diary_name_id","data"];
+    // protected $hidden=["user_id"];
 
     public function diaryName(){
-        return $this->belongsTo(DiaryName::class);
+        return $this->belongsTo(DiaryName::class)->first()->diary_name;
     }
 }

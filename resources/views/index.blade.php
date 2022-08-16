@@ -4,8 +4,16 @@
     <script>
         var token ="{{ csrf_token() }}";
     </script>
+    @env('local')
     <script src="{{asset('js/index.js')}}"></script>
     <script defer src="{{asset('js/simple.js')}}"></script>
+    @endenv
+    
+    @production
+    <script src="{{secure_asset('js/index.js')}}"></script>
+    <script defer src="{{secure_asset('js/simple.js')}}"></script>
+    @endproduction
+
     <title>Tera Diary</title>
     @endsection
 
@@ -14,13 +22,13 @@
 
     <div class="main">
         <div id="topBar">
-            {{-- <div class="buttons">
-                <button class="btn" id="btnExport">Export</button>
-                <button class="btn" id="btnImport">Import</button>
-                <input type="file" name="importFile" id="importFileInput" accept=".json" hidden>
-            </div> --}}
+
             <h1 id="brand-logo">Tera Diary</h1>
-            <div></div>
+            <div class="buttons">
+                <button class="btn" id="btnImport">Import</button>
+                <button class="btn" id="btnExport">Export</button>
+                <input type="file" name="importFile" id="importFileInput" accept=".json" hidden>
+            </div>
         </div>
         <div id="appBody">
             <div id="sideBar">
@@ -39,7 +47,7 @@
             <div id="diaryContent">
                 <div id="diaryNamesBar">
                     {{-- <div class="diaryNames"> --}}
-                    <select class="diaryNames">
+                    <select class="diaryNames select">
                         @foreach($diaryNames as $key=>$diaryName)
                             @if ($key==0)
                                 <option value="{{$diaryName}}" selected>{{$diaryName}}</option>
@@ -48,22 +56,33 @@
                             @endif
                         @endforeach
                     </select>
+
                     <div class="diaryNames">
                         <i class="fa-solid fa-angle-left btnBefore"></i>
                             @foreach($diaryNames as $key=>$diaryName)
                                 @if($key==0)
-                                    <button class="btnDiary selected">{{$diaryName}}</button>
+                                    <button class="btn btnDiary selected">{{$diaryName}}</button>
                                 @else
-                                    <button class="btnDiary">{{$diaryName}}</button>
+                                    <button class="btn btnDiary">{{$diaryName}}</button>
                                 @endif
                             @endforeach
                         <i class="fa-solid fa-angle-right btnNext"></i>
                     </div>
                     <button class="btn btnCreateDiary">Create a diary</button>
-                    {{-- </div> --}}
+
+                    <select class="dates select" id="selectedDateInput">
+                        @foreach($dates as $key=>$date)
+                            @if ($key==0)
+                                <option value="{{$date}}" selected>{{$date}}</option>
+                            @else
+                                <option value="{{$date}}">{{$date}}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
                 <div class="diaryDataHeader">
-                    <p>{{$diaryNames[0]}}</p>
+                    <p id="diaryName">{{$diaryNames[0]}}</p>
+                    <p class="selectedDate">{{$dates[0]}}</p>
                     {{-- <p>{{$selectedDate}}</p> --}}
                 </div>
                 <div class="diaryDataWrapper">

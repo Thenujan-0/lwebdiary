@@ -16,20 +16,20 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     public function index(){
+        // Session::flush();
 
         //First check if screen size is set in cookie if not send js that sets screensize cookie and then reloads
-        DebugBar::warning("HomeController::index()",Cookie::has("screenSize"),Cookie::get("screenSize"));
-        if(!Cookie::has("screenSize")){
-            DebugBar::warning("cookie not found",Cookie::has("screenSize"));
+        // DebugBar::warning("HomeController::index()",Cookie::has("screenSize"),Cookie::get("screenSize"));
+        // if(!Cookie::has("screenSize")){
+        //     DebugBar::warning("cookie not found",Cookie::has("screenSize"));
 
-            return view('includes.setScreenSize');
-        }
-        $screenSize=Cookie::get("screenSize");
-        Cookie::queue(Cookie::forget("screenSize"));
+        //     return view('includes.setScreenSize');
+        // }
+        // $screenSize=Cookie::get("screenSize");
+        // Cookie::queue(Cookie::forget("screenSize"));
         // echo Cookie::get("screenSize");
         // echo "\n";
         // echo Cookie::has("screenSize");
-
         // echo $screenSize;
 
 
@@ -56,30 +56,17 @@ class HomeController extends Controller
 
         $dates=DiaryEntry::where("user_id",$user_id)->get()->pluck("date")->unique()->toArray();
         // dd($dates);
-        $emptyDiaryNameIds=UserEmptyDiary::where("user_id",$user_id)->get()->pluck("diary_name_id");
-        // dd(($diaryNameIds));
+        $diaryNames=DiaryController::getDiaryNames($user_id);
 
-        //Check if there is only one or more and do the operations suitable for that to get the emptyDiarynames
-        if(count($emptyDiaryNameIds)>1){
-            $diaryNames=DB::table("diary_names")->whereIn("id",$emptyDiaryNameIds)->get()->pluck("diary_name")->toArray();
-        }else{
-            // dd($diaryNameIds[0]);
-            $diaryNames=Array();
-            $name=DB::table("diary_names")->where("id",$emptyDiaryNameIds[0])->first("diary_name")->diary_name;
-            // dd($name);
-            array_push($diaryNames,$name);
-        }
-
-        //Todo get the nonempty diaries
 
         // dd($diaryNames);
         $firstName=explode(" ",DB::table("users")->where("id",$user_id)->first("name")->name)[0];
         // dd($firstName);
         // dd($dates);
 
-        if ($screenSize<=500){
-            return view("smallScreen.index",compact("diaryNames","dates","firstName"));
-        }
+        // if ($screenSize<=500){
+        //     return view("smallScreen.index",compact("diaryNames","dates","firstName"));
+        // }
 
         return view("index",compact("dates","firstName","diaryNames"));
         
@@ -122,6 +109,6 @@ class HomeController extends Controller
         DebugBar::warning("yes recv");
         $request->validate([]);
         $screenSize = $request->input("screenSize");
-        Cookie::queue("screenSize",$screenSize,60*24*30);
+        // Cookie::queue("screenSize",$screenSize,60*24*30);
     }
 }

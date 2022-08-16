@@ -6,7 +6,17 @@ var __webpack_exports__ = {};
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 $(document).ready(function () {
-  var main = $(".main"); //Add btnWriteEntry callback
+  var main = $(".main");
+  var selDiary = {
+    name: function name() {
+      /* Returns name of the selected Diary */
+      return $("p#diaryName").text();
+    },
+    date: function date() {
+      /*Returns the selected date of the diary  */
+      return $(".diaryDataHeader p.selectedDate").text();
+    }
+  }; //Add btnWriteEntry callback
 
   $("#btnWriteEntry").click();
 
@@ -29,8 +39,8 @@ $(document).ready(function () {
     //     return;
     // }
 
-    var selectedDiary_ = $(".btnDiary.selected").html();
-    var selectedDate = $(".btnDate.selected").html(); // console.log("selectedDiary",selectedDiary_)
+    var selectedDiary_ = selDiary.name();
+    var selectedDate = selDiary.date(); // console.log("selectedDiary",selectedDiary_)
 
     var data = {
       date: selectedDate,
@@ -38,8 +48,8 @@ $(document).ready(function () {
     };
     $.get("diaryEntry/show", data, function (response) {
       // console.log(response,"resp")
-      var currSelectedDiary = $(".btnDiary.selected").html();
-      var currselectedDate = $(".btnDate.selected").html(); //If the selected diary is not the same as the one this request was sent for, don't show the data
+      var currSelectedDiary = selDiary.name();
+      var currselectedDate = selDiary.date(); //If the selected diary is not the same as the one this request was sent for, don't show the data
 
       if (data["selectedDiary"] != currSelectedDiary || data["date"] != currselectedDate) {
         console.log(data["selectedDiary"], currSelectedDiary, data["date"], currselectedDate);
@@ -75,9 +85,12 @@ $(document).ready(function () {
 
 
   function btnDateCallback() {
-    var date = $(this).html(); //Last selected date
+    console.log("btnDate callback");
+    var date = $(this).val() == "" ? $(this).text() : $(this).val();
+    console.log(date); //Last selected date
 
-    var lastSelDate = $('.btnDate.selected').html();
+    var lastSelDate = selDiary.date();
+    console.log(lastSelDate);
 
     if (lastSelDate == date) {
       return;
@@ -86,11 +99,15 @@ $(document).ready(function () {
 
     $(".btnDate.selected").removeClass("selected");
     $(this).addClass("selected");
+    $(".diaryDataHeader p.selectedDate").text(date);
     setDiaryData();
-    disableEditMode();
+    disableEditMode(); ///Handle empty diaryNames
+
+    handleEmptyDiaryNames();
   }
 
   $(".btnDate").click(btnDateCallback);
+  $("select#selectedDateInput").change(btnDateCallback);
 
   function enableEditMode() {
     $("p.diaryData").attr("contentEditable", "true");
@@ -104,7 +121,7 @@ $(document).ready(function () {
       return;
     }
 
-    var selectedDiary_ = $(".btnDiary.selected").html();
+    var selectedDiary_ = $("p#diaryName").text();
     var textData = $("p.diaryData").text(); //check if it is empty by checking 
     //If it has an inline write button,
     //If it does then we are ediing an empty entry
@@ -115,7 +132,7 @@ $(document).ready(function () {
       console.log(textData);
       var data = {
         _token: token,
-        selectedDiaries: selectedDiary_,
+        "diaryName": selectedDiary_,
         data: textData,
         date: $(".btnDate.selected").html(),
         allowDuplicateDates: true
@@ -125,11 +142,12 @@ $(document).ready(function () {
       $.post("writeDiary", data, function (response) {
         console.log(response);
         setDiaryData();
-      }); //If it is not > 0, we are editing an existing entry
+      });
+      handleEmptyDiaryNames(); //If it is not > 0, we are editing an existing entry
     } else {
       console.log(textData);
       var _data = {
-        selectedDiary: selectedDiary_,
+        diaryName: selDiary.name(),
         data: textData,
         _token: token,
         date: $(".btnDate.selected").html()
@@ -142,8 +160,7 @@ $(document).ready(function () {
     }
 
     $("p.diaryData").attr("contentEditable", "false");
-    $(".btnEdit").html("Edit");
-    unHideWriteInline();
+    $(".btnEdit").html("Edit"); // unHideWriteInline()
   } //Add btnEdit callback
 
 
@@ -172,11 +189,19 @@ $(document).ready(function () {
     });
   }); //Add btnDiary callback
 
-  main.find(".btnDiary").click(function () {// if(!$(this).hasClass("selected")){
-    //     $(".btnDiary.selected").removeClass("selected")
-    //     $(this).addClass("selected")
-    //     setDiaryData()
-    // }
+  main.find(".btnDiary").click(function () {
+    if (!$(this).hasClass("selected")) {
+      $(".btnDiary.selected").removeClass("selected");
+      $(this).addClass("selected");
+      $("p#diaryName").html($(this).text());
+      setDiaryData();
+    }
+  }); //Add btnDiary SmallScreen callback
+
+  main.find("select.diaryNames").change(function () {
+    console.log($(this).val(), "value now");
+    $("p#diaryName").html($(this).val());
+    setDiaryData();
   });
 
   function addBtnWriteInlineListener() {
@@ -222,6 +247,22 @@ $(document).ready(function () {
     console.log(file.name);
     console.log(file.type);
     console.log($(this).val());
+
+    if (file.type != "application/json") {
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+
+    reader.onload = function (event) {
+      $.post("importDiary", {
+        _token: token,
+        fileData: event.target.result
+      }, function (response) {
+        console.log("response of import", response);
+      });
+    };
   });
 
   function addSkeleton() {
@@ -232,7 +273,34 @@ $(document).ready(function () {
   function removeSkeleton() {
     $("div.diaryDataSkeletons").css("display", "none");
     $("p.diaryData").css("display", "inline");
+  } //Handle empty diaryNames
+
+
+  function handleEmptyDiaryNames() {
+    var data = {
+      _token: token,
+      date: selDiary.date()
+    };
+    $.post("getEmptyDiaryNames", data, function (response) {
+      // response.array.forEach(element => {
+      //     $(".btnDiary")
+      // });
+      var emptyDiaries = JSON.parse(response);
+      var diaryNames = $("button.btnDiary");
+      console.log(emptyDiaries);
+      diaryNames.each(function (key, arg) {
+        elem = $(arg);
+
+        if (emptyDiaries.includes(elem.text())) {
+          elem.addClass("empty");
+        } else {
+          elem.removeClass("empty");
+        }
+      });
+    });
   }
+
+  handleEmptyDiaryNames();
 });
 /******/ })()
 ;

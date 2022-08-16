@@ -7,6 +7,10 @@
     padding: 5px 10px;
     border-radius: 5px;
 
+    @media screen and (max-width:600px) {
+        font-size:16px;
+    }
+
 }
 
 
@@ -32,3 +36,9 @@ a{
     color:$secondary-color;
 }
 
+.select{
+    font-size:18px;
+    border-radius: 10px;
+    border:1px solid rgba(0,0,0,0.4);
+    padding:5px;
+}

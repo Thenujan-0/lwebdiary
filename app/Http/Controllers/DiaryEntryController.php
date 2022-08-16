@@ -37,28 +37,38 @@ class DiaryEntryController extends Controller
 
         $date=$request->input("date");
         $data=$request->input("data");
-        $diaries=explode("$$$$$",$request->input("selectedDiaries"));
-        $diaries=array_filter($diaries);
+        $selDiary= $request->input("diaryName");
+
+        
+        // $diaries=explode("$$$$$",$request->input("selectedDiaries"));
+
+        // $diaries=array_filter($diaries);
 
         //Find diary name ids
-        foreach($diaries as $diary){
-            // echo($diary);
-            // DebugBar::warning("Diary: ".$diary);
-            $diaryName=DiaryName::where("diary_name",$diary)->first();
-            $diaryNameIds[]=$diaryName->id;
+        // foreach($diaries as $diary){
+        //     // echo($diary);
+        //     // DebugBar::warning("Diary: ".$diary);
+        //     $diaryName=DiaryName::where("diary_name",$diary)->first();
+        //     $diaryNameIds[]=$diaryName->id;
 
-        }
+        // }
+        DebugBar::warning($selDiary);
 
-        // DebugBar::warning($diaryNameIds);
-        foreach($diaryNameIds as $diaryNameId){
-            $diaryEntry=new DiaryEntry();
-            $diaryEntry->date=$date;
-            $diaryEntry->data=$data;
-            $diaryEntry->user_id=$user_id;
-            $diaryEntry->diary_name_id=$diaryNameId;
-            $diaryEntry->save();
-        }
-        // DiaryEntry::insert(["user_id"=>$user_id,"date"=>$date,"data"=>$data]);   
+        $diaryNameId = DiaryName::where("diary_name",$selDiary)->first()->id;
+
+        // foreach($diaryNameIds as $diaryNameId){
+        //     $diaryEntry=new DiaryEntry();
+        //     $diaryEntry->date=$date;
+        //     $diaryEntry->data=$data;
+        //     $diaryEntry->user_id=$user_id;
+        //     $diaryEntry->diary_name_id=$diaryNameId;
+        //     $diaryEntry->save();
+        // }
+        DiaryEntry::insert(["user_id"=>$user_id,
+                "date"=>$date,
+                "data"=>$data,
+                "diary_name_id"=>$diaryNameId]);
+
         return response("true");
     }
 

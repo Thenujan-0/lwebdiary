@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     let form =$("#formWriteDiary")
 
@@ -29,6 +30,26 @@ $(document).ready(function() {
             form.find("div.diaryText > div.error").css("visibility","hidden")
         }
     }
+
+    let selDiary= {
+        select:form.find("select[name='diaryName']"),
+    
+        get:function(){
+            return selDiary.select.val()
+        },
+    
+        set: function(value){
+            selDiary.select.val(value)
+        }
+    }
+
+
+
+    console.log(selDiary.get(),"selected diary")
+    selDiary.set("personal")
+    console.log(selDiary.get(),"selected diary")
+
+
 
     function checkDateExists(){
         let date_ =form.find("#date").val()
@@ -83,18 +104,17 @@ $(document).ready(function() {
 
     form.ajaxForm({
         beforeSubmit:  function() {
-            console.log("before submit started")
             
             var valid=true
             
             //Check if at leaset one diary is selected
-            if(form.find("#selectedDiaries").val()===""){
-                showErrorDiaries("Please select at least one diary")
-                valid = false
+            // if(form.find("#selectedDiaries").val()===""){
+            //     showErrorDiaries("Please select at least one diary")
+            //     valid = false
 
-            }else{
-                showErrorDiaries()
-            }
+            // }else{
+                // showErrorDiaries()
+            // }
 
             //Check if something is written in diary
             if(form.find("#diaryText").val()===""){
@@ -138,36 +158,38 @@ $(document).ready(function() {
     })
 
     //Page reloads value is empty
-    form.find("#selectedDiaries").val("");
+    // form.find("#selectedDiaries").val("");
         
 
     //Insert check mark on diary button click
     diaryBtn = form.find('.diaryBtn');
-    form.find(".btnDiary").click(function(){
+    // form.find(".btnDiary").click(function(){
 
-        //Used in php hardcoded 
-        let spacer="$$$$$"
+    //     //Used in php hardcoded 
+    //     let spacer="$$$$$"
 
-        console.log(form.find("#selectedDiaries").val());
+    //     // console.log(form.find("#selectedDiaries").val());
         
 
-        if ($(this).hasClass("selected")) {
-            $(this).removeClass("selected");
-            $(this).children("i").remove()
+    //     if ($(this).hasClass("selected")) {
+    //         $(this).removeClass("selected");
+    //         $(this).children("i").remove()
             
-            let value=$(this).children("p").html()
-            //Remove diary from hidden input
-            form.find("#selectedDiaries").val(form.find("#selectedDiaries").val().replace(spacer+value,""))
+    //         let value=$(this).children("p").html()
+    //         //Remove diary from hidden input
+    //         // form.find("#selectedDiaries").val(form.find("#selectedDiaries").val().replace(spacer+value,""))
+    //         // selDiary.set(value)
 
-        }else{
-            $(this).addClass("selected");
-            $(this).children("p").before('<i class="fa fa-check"></i>');
+    //     }else{
+    //         $(this).addClass("selected");
+    //         $(this).children("p").before('<i class="fa fa-check"></i>');
             
-            let value=$(this).children("p").html()
-            //Add diary to hidden input
-            form.find("#selectedDiaries").val(form.find("#selectedDiaries").val()+spacer+value);
-        }
-    })
+    //         let value=$(this).children("p").html()
+    //         //Add diary to hidden input
+    //         // form.find("#selectedDiaries").val(form.find("#selectedDiaries").val()+spacer+value);
+    //         selDiary.set(value)
+    //     }
+    // })
 
     //Automatically set the date
     let today = new Date();

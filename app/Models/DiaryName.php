@@ -10,6 +10,6 @@ class DiaryName extends Model
     use HasFactory;
     public $timestamps=false;
 
-    protected $fillable = ["diary_name"];
+    protected $fillable = ["diary_name","user_id"];
 
 }

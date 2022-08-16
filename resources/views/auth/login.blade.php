@@ -1,16 +1,33 @@
 @extends("layouts.app")
     
 @section("head")
-    <link rel="stylesheet" href="{{asset("css/signup-login.css")}}">
+    @env("local")
+        <link rel="stylesheet" href="{{asset("css/signup-login.css")}}">
+    @endenv
+
+    @production
+        <link rel="stylesheet" href="{{secure_asset("css/signup-login.css")}}">
+
+    @endproduction
     {{-- <script src="js/login.js"></script> --}}
     <title>Login WebDiary</title>
 @endsection
+
+
 
 @section("content")
 
     <div class="cont">
         <div class="main">
-            <img src="{{asset('images/brand_name.svg')}}" >
+            @env("local")
+                <img src="{{asset('images/brand_name.svg')}}" >
+
+            @endenv
+
+            @production
+                <img src="{{secure_asset('images/brand_name.svg')}}" >
+            @endproduction
+
             <form id="loginForm" method="POST" enctype="multipart-form-data" action="loginUser">
                 @csrf
             <fieldset>
@@ -19,7 +36,7 @@
                     {{$message}}
                 </div>
                 @enderror
-                <h1>Login</h1>
+                <h2>Login</h2>
 
 
                 <div class="formGroup">

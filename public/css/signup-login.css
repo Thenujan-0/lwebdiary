@@ -110,6 +110,11 @@ div.iGroupErrorWrapper {
   padding: 5px 10px;
   border-radius: 5px;
 }
+@media screen and (max-width: 600px) {
+  .btn {
+    font-size: 16px;
+  }
+}
 
 a {
   text-decoration: none;
@@ -123,13 +128,20 @@ a {
 }
 
 .btnPrimary {
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
 }
 
 .btn.btnSecondary {
   background: white;
   border: 1px solid rgb(0, 172, 172);
   color: rgb(0, 172, 172);
+}
+
+.select {
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 5px;
 }
 
 * {
@@ -172,14 +184,15 @@ form fieldset {
   background: white;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 30px 20px;
+  padding: 40px 30px;
 }
-form h1 {
+form h2 {
   margin: 30px 0;
   font-size: 22px;
+  font-weight: normal;
 }
 form label, form p, form input {
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(0, 0, 0, 0.8);
 }
 form input {
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -203,7 +216,7 @@ form input[data-autocompleted] {
 }
 form button, form input[type=submit] {
   display: block;
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
   padding: 5px 20px;
   border-radius: 5px;
   width: 100%;

@@ -109,6 +109,11 @@ div.iGroupErrorWrapper {
   padding: 5px 10px;
   border-radius: 5px;
 }
+@media screen and (max-width: 600px) {
+  .btn {
+    font-size: 16px;
+  }
+}
 
 a {
   text-decoration: none;
@@ -122,13 +127,20 @@ a {
 }
 
 .btnPrimary {
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
 }
 
 .btn.btnSecondary {
   background: white;
   border: 1px solid rgb(0, 172, 172);
   color: rgb(0, 172, 172);
+}
+
+.select {
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 5px;
 }
 
 * {
@@ -142,7 +154,7 @@ body {
 }
 
 form#formWriteDiary {
-  width: 700px;
+  width: clamp(200px, 80%, 700px);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -165,6 +177,10 @@ form#formWriteDiary select {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  padding: 2px;
+  background: white;
+  border-radius: 2px;
 }
 form#formWriteDiary * {
   font-size: 18px;
@@ -182,7 +198,7 @@ form#formWriteDiary textarea {
   padding: 10px;
 }
 form#formWriteDiary .btnAdd {
-  background: #2CFFF2;
+  background: rgb(19, 114, 138);
   float: right;
 }
 form#formWriteDiary .btnBack {
