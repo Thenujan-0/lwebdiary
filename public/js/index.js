@@ -285,8 +285,10 @@ $(document).ready(function () {
       // response.array.forEach(element => {
       //     $(".btnDiary")
       // });
+      var emptyDiaries;
+
       try {
-        var _emptyDiaries = JSON.parse(response);
+        emptyDiaries = JSON.parse(response);
       } catch (e) {
         console.log(response);
         console.log(e);

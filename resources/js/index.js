@@ -313,8 +313,9 @@ function handleEmptyDiaryNames(){
         // response.array.forEach(element => {
         //     $(".btnDiary")
         // });
+        let emptyDiaries;
         try{
-            let emptyDiaries= JSON.parse(response)
+            emptyDiaries= JSON.parse(response)
         }catch(e){
             console.log(response)
             console.log(e)
