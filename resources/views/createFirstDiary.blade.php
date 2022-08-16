@@ -9,10 +9,10 @@
         <link rel="stylesheet" href="{{asset("css/createFirstDiary.css")}}">
         <script src="{{asset('js/createFirstDiary.js')}}"></script>
     @endenv
-    @production
+    @env("heroku")
         <link rel="stylesheet" href="{{secure_asset("css/createFirstDiary.css")}}">
         <script src="{{secure_asset('js/createFirstDiary.js')}}"></script>
-    @endproduction
+    @endenv
     <title>Welcome</title>
 </head>
 <body>

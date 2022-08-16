@@ -1,18 +1,20 @@
 @extends('layouts.app')
     @section('head')
-    <link rel="stylesheet" href="{{secure_asset('css/index.css')}}">
+    
     <script>
         var token ="{{ csrf_token() }}";
     </script>
-    @env('local')
-    <script src="{{asset('js/index.js')}}"></script>
-    <script defer src="{{asset('js/simple.js')}}"></script>
-    @endenv
     
-    @production
-    <script src="{{secure_asset('js/index.js')}}"></script>
-    <script defer src="{{secure_asset('js/simple.js')}}"></script>
-    @endproduction
+    @env("heroku")
+        <script src="{{secure_asset('js/index.js')}}"></script>
+        <script defer src="{{secure_asset('js/simple.js')}}"></script>
+        <link rel="stylesheet" href="{{secure_asset('css/index.css')}}">
+    @endenv
+    @env("local")
+        <script src="{{asset('js/index.js')}}"></script>
+        <script defer src="{{asset('js/simple.js')}}"></script>
+        <link rel="stylesheet" href="{{asset('css/index.css')}}">
+    @endenv
 
     <title>Tera Diary</title>
     @endsection

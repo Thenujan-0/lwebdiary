@@ -5,10 +5,10 @@
         <link rel="stylesheet" href="{{asset("css/signup-login.css")}}">
     @endenv
 
-    @production
+    @env("heroku")
         <link rel="stylesheet" href="{{secure_asset("css/signup-login.css")}}">
 
-    @endproduction
+    @endenv
     {{-- <script src="js/login.js"></script> --}}
     <title>Login WebDiary</title>
 @endsection

@@ -3,9 +3,9 @@
     <script src="{{asset('js/createDiary.js')}}"></script>
 @endenv
 
-@production
+@env("heroku")
     <script src="{{secure_asset('js/createDiary.js')}}"></script>
-@endproduction
+@endenv
 <form action="createDiary" method="post" id="formCreateDiary" enctype="multipart/form-data" style="display:none">
     @csrf
     <label>Enter the name of new diary</label>

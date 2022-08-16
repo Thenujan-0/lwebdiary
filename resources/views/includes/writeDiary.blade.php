@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 
 
@@ -7,17 +6,11 @@
 <script src="{{asset("js/writeDiary.js")}}"></script>
 @endenv
 
-@production
+@env("heroku")
     <link rel="stylesheet" href="{{secure_asset("css/writeDiary.css")}}">
     <script src="{{secure_asset("js/writeDiary.js")}}"></script>
-@endproduction
+@endenv
 
-=======
-    
-<link rel="stylesheet" href="{{secure_asset("css/writeDiary.css")}}">
-
-<script src="{{secure_asset("js/writeDiary.js")}}"></script>
->>>>>>> 15c3a9b2d6b9324ecae163459bd2eeb2c5fa4d73
 <form action="diaryEntry/create" id="formWriteDiary" enctype="multipart/form-data" method="put" style="display:none;">
     @csrf
     {{-- <input type="button" id="btnBackWriteDiary" value='Back'> --}}
