@@ -285,7 +285,13 @@ $(document).ready(function () {
       // response.array.forEach(element => {
       //     $(".btnDiary")
       // });
-      var emptyDiaries = JSON.parse(response);
+      try {
+        var _emptyDiaries = JSON.parse(response);
+      } catch (e) {
+        console.log(response);
+        console.log(e);
+      }
+
       var diaryNames = $("button.btnDiary");
       console.log(emptyDiaries);
       diaryNames.each(function (key, arg) {
