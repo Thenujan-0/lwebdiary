@@ -115,6 +115,11 @@ div.iGroupErrorWrapper {
     font-size: 16px;
   }
 }
+@media screen and (max-width: 400px) {
+  .btn {
+    font-size: 15px;
+  }
+}
 
 a {
   text-decoration: none;
@@ -142,6 +147,11 @@ a {
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   padding: 5px;
+}
+@media screen and (max-width: 400px) {
+  .select {
+    font-size: 14px;
+  }
 }
 
 * {

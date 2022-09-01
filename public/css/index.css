@@ -12,6 +12,11 @@
     font-size: 16px;
   }
 }
+@media screen and (max-width: 400px) {
+  .btn {
+    font-size: 15px;
+  }
+}
 
 a {
   text-decoration: none;
@@ -39,6 +44,11 @@ a {
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   padding: 5px;
+}
+@media screen and (max-width: 400px) {
+  .select {
+    font-size: 14px;
+  }
 }
 
 * {
@@ -149,6 +159,8 @@ a {
   border-radius: 10px;
   padding: 5px;
   padding-bottom: 0;
+  display: flex;
+  flex-wrap: nowrap;
 }
 @media screen and (max-width: 500px) {
   #diaryContent #diaryNamesBar div.diaryNames {
@@ -186,6 +198,11 @@ a {
   margin: 10px;
   color: rgb(0, 172, 172);
   white-space: nowrap;
+}
+@media screen and (max-width: 600px) {
+  #diaryContent .btnCreateDiary {
+    padding: 5px 10px;
+  }
 }
 #diaryContent .btnCreateDiary:hover {
   border: 2px solid rgb(0, 172, 172);
@@ -263,6 +280,11 @@ a {
 @media screen and (max-width: 600px) {
   #topBar h1#brand-logo {
     font-size: 25px;
+  }
+}
+@media screen and (max-width: 400px) {
+  #topBar h1#brand-logo {
+    font-size: 20px;
   }
 }
 #topBar .buttons {

@@ -125,6 +125,8 @@ $sidebarWidthM:150px;
             border-radius:10px;
             padding:5px;
             padding-bottom:0;
+            display:flex;
+            flex-wrap:nowrap;
 
             @media screen and (max-width:500px) {
                 display: none;
@@ -184,6 +186,10 @@ $sidebarWidthM:150px;
         color:$secondary-color;
         white-space: nowrap;
 
+        @media screen and (max-width:600px) {
+            padding: 5px 10px;
+        }
+
         &:hover{
             border:2px solid $secondary-color;
             position:relative;
@@ -193,6 +199,8 @@ $sidebarWidthM:150px;
             right:2px;
 
         }
+
+
 
 
     }
@@ -290,6 +298,10 @@ $sidebarWidthM:150px;
         color:white;
         @media screen and(max-width:600px){
             font-size: 25px;;
+        }
+
+        @media screen and(max-width:400px){
+            font-size:20px;
         }
     }
 

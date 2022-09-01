@@ -232,6 +232,7 @@ $(document).ready(function(){
         //Add btnWriteInline callback
         $(".btnWriteInline").click(function(){
             enableEditMode()
+            handleEmptyDiaryNames()
         
         })
     }
