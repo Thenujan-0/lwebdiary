@@ -17,6 +17,6 @@ class DiaryEntry extends Model
     // protected $hidden=["user_id"];
 
     public function diaryName(){
-        return $this->belongsTo(DiaryName::class)->first()->diary_name;
+        return $this->belongsTo(DiaryName::class);
     }
 }

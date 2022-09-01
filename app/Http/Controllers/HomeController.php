@@ -54,7 +54,7 @@ class HomeController extends Controller
         }
         
 
-        $dates=DiaryEntry::where("user_id",$user_id)->get()->pluck("date")->unique()->toArray();
+        $dates=DiaryEntry::where("user_id",$user_id)->orderBy("date","DESC")->get("date")->pluck("date")->unique()->toArray();
         // dd($dates);
         $diaryNames=DiaryController::getDiaryNames($user_id);
 

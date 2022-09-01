@@ -130,11 +130,10 @@ class DiaryController extends Controller
             array_push($diaryNames,$name);
         }
 
-        //Todo get the nonempty diaries
 
         $nonEmptyDiaries=DiaryEntry::where("user_id",$user_id)->distinct("diary_name_id")->get();
         foreach($nonEmptyDiaries as $diary){
-            $diaryName=$diary->diaryName();
+            $diaryName=$diary->diaryName()->first()->diary_name;
             if (!in_array($diaryName,$diaryNames)){
                 debugBar::warning($diaryName);
                 array_push($diaryNames,$diaryName);
@@ -152,11 +151,12 @@ class DiaryController extends Controller
 
             $nonEmptyDiaries=[];
             foreach($out as $o){
-                array_push($nonEmptyDiaries,$o->diaryName());
+                array_push($nonEmptyDiaries,$o->diaryName()->first()->diary_name);
             }
             $out = json_encode($nonEmptyDiaries);
 
             $allDiaries= DiaryController::getDiaryNames($user_id);
+            // debugBar::warning("non empty diaries",$nonEmptyDiaries);
 
             foreach($nonEmptyDiaries as $nonEmptyDiary){
                 $key=array_search($nonEmptyDiary,$allDiaries);
@@ -164,7 +164,7 @@ class DiaryController extends Controller
             }
 
             $emptyDiaries=json_encode(array_values($allDiaries));
-            Debugbar::warning($emptyDiaries);
+            // Debugbar::warning($emptyDiaries);
 
             return response($emptyDiaries);
         }catch (Exception $e){
