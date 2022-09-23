@@ -83,9 +83,14 @@
                     </select>
                 </div>
                 <div class="diaryDataHeader">
+                    @if(!empty($diaryNames))
                     <p id="diaryName">{{$diaryNames[0]}}</p>
+                    @endif
+
+                    @if(!empty($dates))
+                        
                     <p class="selectedDate">{{$dates[0]}}</p>
-                    {{-- <p>{{$selectedDate}}</p> --}}
+                    @endif
                 </div>
                 <div class="diaryDataWrapper">
                     <p class="diaryData"></p>
@@ -99,8 +104,8 @@
                         
                     </div>
                     <div class="buttons">
-                        <button class="btn btnEdit">Edit</button>
-                        <button class="btn btnDel">Delete</button>
+                        <button class="btn btnEdit"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btnDel"><i class="fa-solid fa-trash"></i></button>
                     </div>
 
                 </div>
