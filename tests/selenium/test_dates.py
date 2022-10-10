@@ -9,7 +9,7 @@ def test_order():
     """ Check if dates are in descending order """
     driver = drvr.get_drvr("order")
     
-    driver.get("http://127.0.0.1:8000/")
+    driver.get(ROOT)
     login(driver)
     
     dates = driver.find_elements(by=By.CSS_SELECTOR, value=".btn.btnDate")
