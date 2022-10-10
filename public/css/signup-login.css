@@ -154,6 +154,14 @@ a {
   }
 }
 
+p.subText {
+  font-size: 14px;
+}
+
+input[type=text] {
+  border: 1px solid rgb(19, 114, 138);
+}
+
 * {
   margin: 0;
   font-family: "Roboto", sans-serif;

@@ -2,8 +2,9 @@
 
 
 @env("local")
-<link rel="stylesheet" href="{{asset("css/writeDiary.css")}}">
-<script src="{{asset("js/writeDiary.js")}}"></script>
+{{-- <link rel="stylesheet" href="{{asset("css/writeDiary.css")}}"> --}}
+@vite(["resources/assets/sass/writeDiary.scss","resources/js/writeDiary.js"])
+{{-- <script src="{{asset("js/writeDiary.js")}}"></script> --}}
 @endenv
 
 @env("heroku")

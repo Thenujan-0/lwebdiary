@@ -50,10 +50,9 @@ $(document).ready(function () {
     set: function set(value) {
       selDiary.select.val(value);
     }
-  };
-  console.log(selDiary.get(), "selected diary");
-  selDiary.set("personal");
-  console.log(selDiary.get(), "selected diary");
+  }; // console.log(selDiary.get(),"selected diary")
+
+  selDiary.set("personal"); // console.log(selDiary.get(),"selected diary")
 
   function checkDateExists() {
     var date_ = form.find("#date").val();
@@ -61,11 +60,10 @@ $(document).ready(function () {
       action: 'dateExists',
       date: date_,
       _token: token
-    };
-    console.log("checking dateexists");
-    $.post("dateExists", data, function (response) {
-      console.log("");
+    }; // console.log("checking dateexists")
 
+    $.post("dateExists", data, function (response) {
+      // console.log("")
       if (response === "true") {
         showErrorDate("Date already exists");
         valid = false;
@@ -77,7 +75,7 @@ $(document).ready(function () {
 
 
   form.find("#btnBackWriteDiary").click(function () {
-    console.log("btnBack callback");
+    // console.log("btnBack callback")
     form.css("display", "none");
     $("#darkOverlay").css("display", "none"); //Remove all the error messages
 
@@ -89,7 +87,7 @@ $(document).ready(function () {
   var typeTimeout = null;
   form.find("textarea#diaryText").on("input", function () {
     if (typeTimeout == null) {
-      console.log("changed");
+      // console.log("changed")
       typeTimeout = setTimeout(function () {
         typeTimeout = null;
       }, 1000);
@@ -121,10 +119,9 @@ $(document).ready(function () {
       return valid;
     },
     complete: function complete(xhr) {
-      console.log(xhr.responseText);
-
+      // console.log(xhr.responseText)
       if (xhr.responseText === "true") {
-        console.log("clicked back button");
+        // console.log("clicked back button")
         form.find("#btnBackWriteDiary").click();
         window.location.reload();
       } else {

@@ -11,9 +11,9 @@ $(document).ready(function () {
 
       if (response.responseText != "") {
         form.find(".btnCancel").click();
-      }
+      } // window.location.reload()
+      //! CHANGE
 
-      window.location.reload();
     }
   }); //Add create diary button callback
 

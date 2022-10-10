@@ -45,9 +45,9 @@ $(document).ready(function() {
 
 
 
-    console.log(selDiary.get(),"selected diary")
+    // console.log(selDiary.get(),"selected diary")
     selDiary.set("personal")
-    console.log(selDiary.get(),"selected diary")
+    // console.log(selDiary.get(),"selected diary")
 
 
 
@@ -55,10 +55,10 @@ $(document).ready(function() {
         let date_ =form.find("#date").val()
 
         var data = { action: 'dateExists',date :date_,_token:token};
-        console.log("checking dateexists")
+        // console.log("checking dateexists")
 
         $.post("dateExists", data, function(response) {
-            console.log("")
+            // console.log("")
             if(response === "true") {
                 showErrorDate("Date already exists")
                 valid = false
@@ -70,7 +70,7 @@ $(document).ready(function() {
 
     //btnBackWriteDiary callback
     form.find("#btnBackWriteDiary").click(function(){
-        console.log("btnBack callback")
+        // console.log("btnBack callback")
         form.css("display","none")
         $("#darkOverlay").css("display","none")
         //Remove all the error messages
@@ -86,7 +86,7 @@ $(document).ready(function() {
 
         function(){
             if(typeTimeout==null){
-                console.log("changed")
+                // console.log("changed")
                 typeTimeout=setTimeout(function(){typeTimeout=null},1000)
                 checkDateExists()
             }
@@ -129,9 +129,9 @@ $(document).ready(function() {
         },
 
         complete: function(xhr) {
-            console.log(xhr.responseText)
+            // console.log(xhr.responseText)
             if(xhr.responseText==="true"){
-                console.log("clicked back button")
+                // console.log("clicked back button")
                 form.find("#btnBackWriteDiary").click()
                 window.location.reload()
             }else{
@@ -162,7 +162,7 @@ $(document).ready(function() {
         
 
     //Insert check mark on diary button click
-    diaryBtn = form.find('.diaryBtn');
+    // diaryBtn = form.find('.diaryBtn');
     // form.find(".btnDiary").click(function(){
 
     //     //Used in php hardcoded 

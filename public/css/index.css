@@ -51,6 +51,14 @@ a {
   }
 }
 
+p.subText {
+  font-size: 14px;
+}
+
+input[type=text] {
+  border: 1px solid rgb(19, 114, 138);
+}
+
 * {
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -317,6 +325,7 @@ a {
 }
 #topBar .buttons .btn {
   background: none;
+  color: rgb(163, 195, 203);
 }
 #topBar .buttons .btn:hover {
   color: white;

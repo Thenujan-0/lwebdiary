@@ -16,21 +16,24 @@
     <title>Welcome</title>
 </head>
 <body>
-    <div id="createFirstDiary">
-        <form method="post" id="createDiaryForm" action="createDiary" enctype="multipart/form-data">
-            @csrf
-            <h2>Welcome to web diary</h2>
-            <h2>To get started create your first diary</h2>
-            <div class="name">
-                <p>Diary name</p>
-                <input type="text" name="diary_name">
-            </div>
-            @error("diary_name")<span class="errorText">{{$message}}</span>@enderror
-            <p>You can create more than one diaries and keep different stories
-                seperated 
-            </p>
-            <button>Create</button>
-        </form>
+    <div class="main">
+        <h2 class="welcome">Welcome to web diary</h2>
+
+        <div id="createFirstDiary">
+            <form method="post" id="createDiaryForm" action="createDiary" enctype="multipart/form-data">
+                @csrf
+                <h2>To get started create your first diary</h2>
+                <div class="name">
+                    <p>Diary name</p>
+                    <input type="text" name="diary_name">
+                </div>
+                @error("diary_name")<span class="errorText">{{$message}}</span>@enderror
+                <p class="subText">You can create more than one diaries and keep different stories
+                    seperated
+                </p>
+                <button>Create</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

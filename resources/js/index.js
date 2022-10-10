@@ -324,7 +324,7 @@ function handleEmptyDiaryNames(){
         let diaryNames= $("button.btnDiary")
         console.log(emptyDiaries)
         diaryNames.each((key,arg)=>{
-            elem =$(arg)
+            let elem =$(arg)
             if(emptyDiaries.includes(elem.text())){
                 elem.addClass("empty")
             }else{

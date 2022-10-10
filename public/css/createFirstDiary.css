@@ -102,19 +102,92 @@ div.iGroupErrorWrapper {
     opacity: 1;
   }
 }
+.btn {
+  outline: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+@media screen and (max-width: 600px) {
+  .btn {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .btn {
+    font-size: 15px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #00b4a8;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.nodisplay {
+  display: hidden;
+}
+
+.btnPrimary {
+  background: rgb(19, 114, 138);
+}
+
+.btn.btnSecondary {
+  background: white;
+  border: 1px solid rgb(0, 172, 172);
+  color: rgb(0, 172, 172);
+}
+
+.select {
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 5px;
+}
+@media screen and (max-width: 400px) {
+  .select {
+    font-size: 14px;
+  }
+}
+
+p.subText {
+  font-size: 14px;
+}
+
+input[type=text] {
+  border: 1px solid rgb(19, 114, 138);
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   background: rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.main {
+  font-family: "Roboto", sans-serif;
+}
+.main h2.welcome {
+  text-align: center;
+  font-weight: normal;
+  font-size: 40px;
 }
 
 #createFirstDiary {
-  position: absolute;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.3);
   font-family: "Roboto", sans-serif;
@@ -141,19 +214,18 @@ body {
   align-items: center;
 }
 #createFirstDiary .name input, #createFirstDiary .name p {
-  font-size: 20px;
+  font-size: 18px;
   margin: 5px;
   color: black;
 }
 #createFirstDiary .name input {
-  border: 1px solid rgba(0, 0, 0, 0.6);
   outline: none;
   padding: 1px 5px;
   border-radius: 5px;
   padding: 5px;
 }
-#createFirstDiary p {
-  color: rgba(0, 0, 0, 0.5);
+#createFirstDiary p.subText {
+  color: rgba(0, 0, 0, 0.6);
 }
 #createFirstDiary button {
   border: none;
@@ -163,4 +235,5 @@ body {
   background: #fff;
   border-radius: 5px;
   background: rgb(19, 114, 138);
+  color: white;
 }
