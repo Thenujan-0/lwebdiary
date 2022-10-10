@@ -11,6 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 import pytest
 
+ROOT="http://127.0.0.1:8000/"
 
 def create_web_drvr():
     driver = webdriver.Chrome(service= ChromeService(ChromeDriverManager().install()))
@@ -22,8 +23,8 @@ curr_drvr= None
 def login(driver):
     email = driver.find_element(by=By.CSS_SELECTOR, value="#email")
     password =driver.find_element(by=By.CSS_SELECTOR,value = "#password")
-    email.send_keys("sthenujan2002@gmail.com")
-    password.send_keys("thenujan2002")
+    email.send_keys("test@gmail.com")
+    password.send_keys("test")
     
     login = driver.find_element(by=By.CSS_SELECTOR, value="input[name='submit']")
     login.click()
