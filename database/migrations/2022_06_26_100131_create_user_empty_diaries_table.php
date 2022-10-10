@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Jenssegers\Mongodb\Schema\Blueprint;
 
 return new class extends Migration
 {
@@ -23,10 +23,10 @@ return new class extends Migration
                 ->on("users")
                 ->onDelete("cascade");
 
-            // $table->foreign("diary_name_id")
-            //     ->references("id")
-            //     ->on("diary_names")
-            //     ->onDelete("cascade");
+            $table->foreign("diary_name_id")
+                ->references("id")
+                ->on("diary_names")
+                ->onDelete("cascade");
         });
     }
 

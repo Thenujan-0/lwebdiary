@@ -46,9 +46,9 @@ class LoginController extends Controller
             'password'=>'required'
         ]);
 
-        $name = $request->input("email");
+        $email = $request->input("email");
         $password_sum = hash("sha256",$request->input("password"));
-        $data= User::get()->where("email",$name)->first();
+        $data= User::get()->where("email",$email)->first();
 
         if (empty($data)){
             DebugBar::warning("No account with email");
@@ -58,9 +58,13 @@ class LoginController extends Controller
         if ($data->password!=$password_sum){
             return back()->withErrors(['main'=>'Invalid password']);
         }
-
-        Session::put("user_id",$data->value("id"));
+        // dd($data->id);
+        $user_id =$data->id;
+        Session::put("user_id",$user_id);
+        debugBar::warning($user_id);    
+        debugBar::warning("user_id".Session::get($user_id));
         Session::put("name",$data->value("name"));
+        Cookie::queue("user_id",$user_id,5);
         return redirect()->route("index");
 
     }

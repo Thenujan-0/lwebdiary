@@ -98,7 +98,7 @@ class DiaryEntryController extends Controller
         $diaryId=DiaryName::where("diary_name",$selectedDiary)->first()->id;
 
         $user_id=Session::get("user_id");
-        $dataRecord = DiaryEntry::where(["user_id"=>$user_id,"date"=>$date,"diary_name_id"=>$diaryId])->first("data");
+        $dataRecord = DiaryEntry::where(["user_id"=>$user_id,"date"=>$date,"diary_name_id"=>$diaryId])->first();
         if(is_null($dataRecord)){
             return response("");
         }

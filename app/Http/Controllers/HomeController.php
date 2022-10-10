@@ -50,19 +50,16 @@ class HomeController extends Controller
 
         
         if (!$hasDiary){
-            return view("createFirstDiary");
+            return view("createFirstDiary",["userId"=>$user_id]);
         }
         
+        // dd($data1);
 
-        $dates=DiaryEntry::where("user_id",$user_id)->orderBy("date","DESC")->get("date")->pluck("date")->unique()->toArray();
+        $dates=DiaryEntry::where("user_id",$user_id)->pluck("date")->unique()->toArray();
         // dd($dates);
         $diaryNames=DiaryController::getDiaryNames($user_id);
 
-
-        // dd($diaryNames);
-        $firstName=explode(" ",DB::table("users")->where("id",$user_id)->first("name")->name)[0];
-        // dd($firstName);
-        // dd($dates);
+        $firstName=explode(" ",User::find($user_id)->first()->name)[0];
 
         // if ($screenSize<=500){
         //     return view("smallScreen.index",compact("diaryNames","dates","firstName"));
