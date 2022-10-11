@@ -97,7 +97,7 @@ return [
 
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('DB_URI', 'mongodb+srv://thenujan:3Hx6pp0g6vWE1FU4@cluster0.pjuhu.mongodb.net/?retryWrites=true&w=majority'),
+            'dsn' => env('DB_URI', ''),
             'database' => 'teradiary',
         ],
 
