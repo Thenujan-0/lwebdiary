@@ -106,6 +106,15 @@ class LoginController extends Controller
     public function signup(){
         return view("auth.signup");
     }
+
+    public static function validUserId(){
+        $user_id = Session::get("user_id");
+        $user = User::find($user_id);
+        if (is_null($user)){
+            return false;
+        }
+        return true;
+    }
     
     
 }

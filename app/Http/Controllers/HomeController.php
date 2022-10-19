@@ -11,7 +11,7 @@ use Debugbar;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\LoginController;
 
 class HomeController extends Controller
 {
@@ -35,7 +35,9 @@ class HomeController extends Controller
 
         
         //Check if logged in
-        if( !(session()->has("user_id") && session()->has("name")) ){
+        $notLoggedIn =!(session()->has("user_id") && session()->has("name"));
+        
+        if($notLoggedIn || !LoginController::validUserId()){
             $email=Cookie::get("email");
             return view("auth.login",compact("email"));
 
