@@ -16,6 +16,7 @@ class User extends Model
     public $timestamps=false;
 
     public function diaryNames(){
+        /* Returns diaryNames and diaryNameIds as an array */
         $user_id = $this->id;
         // try{
 
@@ -24,12 +25,12 @@ class User extends Model
 
             //Check if there is only one or more and do the operations suitable for that to get the emptyDiarynames
             if(count($emptyDiaryNameIds)>1){
-                $diaryNames=DiaryName::whereIn("_id",$emptyDiaryNameIds)->get()->pluck("diary_name")->toArray();
+                $diaryNames=DiaryName::whereIn("_id",$emptyDiaryNameIds)->get()->toArray();
             }else{
                 // dd($diaryNameIds[0]);
                 $diaryNames=Array();
                 // dd($emptyDiaryNameIds);
-                $name=DiaryName::find($emptyDiaryNameIds[0])->first()->diary_name;
+                $name=DiaryName::find($emptyDiaryNameIds[0])->first()->original;
                 // dd($name);
                 array_push($diaryNames,$name);
             }
@@ -45,7 +46,7 @@ class User extends Model
                 $diaryNameId=$diary->diary_name_id;
                 // dd($diary);
                 // $diaryName= DiaryName::find($diaryNameId)->diary_name;
-                $diaryName = $diary->diaryName()->first()->diary_name;
+                $diaryName = $diary->diaryName()->first()->original;
                 // dd($diaryName);
                 if (!in_array($diaryName,$diaryNames)){
                     // debugBar::warning($diaryName);

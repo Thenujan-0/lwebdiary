@@ -140,7 +140,11 @@ class DiaryController extends Controller
             }
             $out = json_encode($nonEmptyDiaries);
 
-            $allDiaries= DiaryController::getDiaryNames($user_id);
+            $allDiariesDict= DiaryController::getDiaryNames($user_id);
+            $allDiaries = [];
+            foreach($allDiariesDict as $diary){
+                array_push($allDiaries,$diary["diary_name"]);
+            }
             // debugBar::warning("non empty diaries",$nonEmptyDiaries);
 
             foreach($nonEmptyDiaries as $nonEmptyDiary){
@@ -189,5 +193,16 @@ class DiaryController extends Controller
         }
 
         return response("true",200);
+    }
+
+    public function getDiaryDatas(Request $request){
+        $dates= $request->dates;
+        if(is_null($dates)){
+            return;
+        }
+        $user_id = Session::get("user_id");
+        $data = DiaryEntry::where("user_id",$user_id)->whereIn("date",$dates)->get();
+        return json_encode($data);
+
     }
 }

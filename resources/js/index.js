@@ -1,3 +1,4 @@
+import {cacher } from "./includes/cacher.js"
 
 $(document).ready(function(){
     
@@ -14,6 +15,17 @@ $(document).ready(function(){
         }
     }
 
+    //init cacher with diaryNames
+    let diaryNames = $(".btnDiary").toArray()
+    let diaryNamesDict={};
+    diaryNames.forEach(function(elem){
+        let text = elem.textContent
+        let id = elem.getAttribute("data-id")
+        console.log(id,text)
+        diaryNamesDict[id]=text
+    })
+    // console.log(diaryNamesDict)
+    cacher.init(diaryNamesDict)
 
     //Add btnWriteEntry callback
     $("#btnWriteEntry").click()
@@ -25,6 +37,24 @@ $(document).ready(function(){
     function unHideWriteInline(){
         $(".btnWriteInline").css("display","inline")
     }
+
+    function findDatesNearby(){
+        let dates=[]
+        let count = 5
+        let targetDate = selDiary.date()
+        $(".btnDate").each(function(ind,elem){
+          dates.push(elem.innerHTML)
+        })
+        let ind = dates.indexOf(targetDate)
+        let startInd =ind-count
+        if (ind<=count){
+            startInd=0
+        }
+        dates =dates.slice(startInd,ind+count)
+        return dates
+
+      }
+    
 
     //The following variable is used to know if a request to setDiary data is already pending
     window.pendingsetDiaryDataReq=false;
@@ -43,6 +73,20 @@ $(document).ready(function(){
         let selectedDate=selDiary.date()
         // console.log("selectedDiary",selectedDiary_)
         let data = {date:selectedDate,selectedDiary:selectedDiary_}
+        if(cacher.dateExists(selectedDate)){
+            console.log(cacher.diaries[selectedDate])
+            let response=cacher.diaries[selectedDate][selectedDiary_]
+            console.log("response",response)
+            if(response && response!=""){
+                $(".diaryData").html(response)
+            }else{
+                $(".diaryData").html("Nothing written here :( <button class='btn btnWriteInline'>Write</button>")
+                addBtnWriteInlineListener()
+            }
+            removeSkeleton()
+
+            return;
+        }
         $.get("diaryEntry/show",data,function (response){
             // console.log(response,"resp")
             let currSelectedDiary= selDiary.name()
@@ -65,6 +109,29 @@ $(document).ready(function(){
             }
             removeSkeleton()
         })
+
+        let datesToQuery = findDatesNearby()
+        //Remove the dates that existin cache
+        let datesInCache = Object.keys(cacher.diaries)
+        console.log("datesInCache",datesInCache)
+        datesToQuery = datesToQuery.filter(function(elem){
+            return !datesInCache.includes(elem)
+                
+        })
+        // console.log("queriedDates",datesToQuery)
+
+        $.post("/getDiaryDatas",{dates:datesToQuery,_token:token},function(resp){
+            // console.log(resp)
+            let json = JSON.parse(resp)
+            json.forEach(elem => {
+                // console.log("elem",elem)
+                cacher.set(elem["date"],elem["diary_name_id"],elem["data"])
+            });
+
+            // console.log(cacher.diaries)
+
+        })
+
         // console.log("removed skeleton")
     }
 
@@ -310,6 +377,27 @@ function removeSkeleton(){
 //Handle empty diaryNames
 function handleEmptyDiaryNames(){
     let data= {_token:token,date:selDiary.date()}
+    let date = selDiary.date()
+    if (cacher.dateExists(date)){
+        // console.log("--------------------")
+        let emptyDiaries = cacher.emptyDiaries(date)
+        emptyDiaryProcessor(emptyDiaries)
+        return
+    }
+
+    function emptyDiaryProcessor(emptyDiaries){
+        let diaryNames= $("button.btnDiary")
+        // console.log(emptyDiaries)
+        diaryNames.each((key,arg)=>{
+            let elem =$(arg)
+            if(emptyDiaries.includes(elem.text())){
+                elem.addClass("empty")
+            }else{
+                elem.removeClass("empty")
+            }
+        })
+    }
+
     $.post("getEmptyDiaryNames",data,function(response){
         // response.array.forEach(element => {
         //     $(".btnDiary")
@@ -321,16 +409,7 @@ function handleEmptyDiaryNames(){
             console.log(response)
             console.log(e)
         }
-        let diaryNames= $("button.btnDiary")
-        console.log(emptyDiaries)
-        diaryNames.each((key,arg)=>{
-            let elem =$(arg)
-            if(emptyDiaries.includes(elem.text())){
-                elem.addClass("empty")
-            }else{
-                elem.removeClass("empty")
-            }
-        })
+        
 
     })
 

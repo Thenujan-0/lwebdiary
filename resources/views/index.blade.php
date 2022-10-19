@@ -50,22 +50,22 @@
                 <div id="diaryNamesBar">
                     {{-- <div class="diaryNames"> --}}
                     <select class="diaryNames select">
-                        @foreach($diaryNames as $key=>$diaryName)
+                        @foreach($diaryNames as $key=>$diaryNameObj)
                             @if ($key==0)
-                                <option value="{{$diaryName}}" selected>{{$diaryName}}</option>
+                                <option value="{{$diaryNameObj["diary_name"]}}" selected>{{$diaryNameObj["diary_name"]}}</option>
                             @else
-                                <option value="{{$diaryName}}">{{$diaryName}}</option>
+                                <option value="{{$diaryNameObj["diary_name"]}}">{{$diaryNameObj["diary_name"]}}</option>
                             @endif
                         @endforeach
                     </select>
 
                     <div class="diaryNames">
                         <i class="fa-solid fa-angle-left btnBefore"></i>
-                            @foreach($diaryNames as $key=>$diaryName)
+                            @foreach($diaryNames as $key=>$diaryNameObj)
                                 @if($key==0)
-                                    <button class="btn btnDiary selected">{{$diaryName}}</button>
+                                    <button class="btn btnDiary selected" data-id="{{$diaryNameObj["_id"]}}">{{$diaryNameObj["diary_name"]}}</button>
                                 @else
-                                    <button class="btn btnDiary">{{$diaryName}}</button>
+                                    <button class="btn btnDiary" data-id="{{$diaryNameObj["_id"]}}">{{$diaryNameObj["diary_name"]}}</button>
                                 @endif
                             @endforeach
                         <i class="fa-solid fa-angle-right btnNext"></i>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="diaryDataHeader">
                     @if(!empty($diaryNames))
-                    <p id="diaryName">{{$diaryNames[0]}}</p>
+                    <p id="diaryName">{{$diaryNames[0]["diary_name"]}}</p>
                     @endif
 
                     @if(!empty($dates))

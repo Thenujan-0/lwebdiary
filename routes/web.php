@@ -47,6 +47,7 @@ Route::post("/dateExists",[DiaryController::class,"dateExists"]);
 Route::post("/editDiaryData",[DiaryController::class,"editDiaryData"]);
 Route::post("/getEmptyDiaryNames",[DiaryController::class,"getEmptyDiaryNames"]);
 Route::post("/importDiary",[DiaryController::class,"importDiary"]);
+Route::post("/getDiaryDatas",[DiaryController::class,"getDiaryDatas"]);
 
 
 Route::post("simple",[HomeController::class,"setScreenSize"]);

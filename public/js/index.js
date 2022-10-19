@@ -31,6 +31,14 @@ $(document).ready(function () {
 
   window.pendingsetDiaryDataReq = false;
 
+  function findDatesNearby(date){
+    let dates=[]
+    $(".btnDate").each(function(elem){
+      dates.push(elem)
+    })
+    console.lod(dates)
+  }
+
   function setDiaryData() {
     addSkeleton(); // console.log("added skeleton")
     //If already a request is pending don't send another one
@@ -38,6 +46,7 @@ $(document).ready(function () {
     //     console.log("pending diary Data request")
     //     return;
     // }
+    findDatesNearby()
 
     var selectedDiary_ = selDiary.name();
     var selectedDate = selDiary.date(); // console.log("selectedDiary",selectedDiary_)
@@ -68,6 +77,12 @@ $(document).ready(function () {
 
       removeSkeleton();
     }); // console.log("removed skeleton")
+
+    fetch("/getDiaryDates",{body:{dates:[selectedDate]}}).then((resp)=>resp.json()).then(
+      (data)=>{
+        console.log(data)
+      }
+    )
   } //sets the diary data for last date 
 
 

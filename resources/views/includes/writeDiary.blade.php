@@ -27,7 +27,7 @@
         <label>Select diary to add this entry to</label>
         <select name="diaryName" id="">
             @foreach($diaryNames as $diary)
-                    <option value="{{$diary}}">{{$diary}}</option>
+                    <option value="{{$diary["diary_name"]}}">{{$diary["diary_name"]}}</option>
             @endforeach
         </select>
         {{-- <ul>
