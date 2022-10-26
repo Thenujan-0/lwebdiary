@@ -13,24 +13,6 @@ use Illuminate\Support\Facades\Cookie;
 use Debugbar;
 class LoginController extends Controller
 {
-    // public function loginUser(Request $request){
-    //     // dd($request->all());
-    //     $name = $request->input("email");
-    //     $password_sum = hash("sha256",$request->input("password"));
-        
-    //     // $data =DB::table("users")->where("email",$name)->where("password_sha256",$password)->first();
-    //     $data= Users_table::get()->where("email",$name)->where("password_sha256",$password_sum)->first();
-    //     if (empty($data)){
-    //         return redirect()->route("login")->with("error","Invalid email or password");
-    //     }else{
-    //         Session::put("user_id",$data->value("user_id"));
-    //         Session::put("username",$data->value("username"));
-
-    //         // return $arr["user_id"];
-    //         return redirect()->route('index');
-    //     // return redirect()->route("index");
-    //     }
-    // }
 
     public function loginUser(Request $request){
 
@@ -41,7 +23,8 @@ class LoginController extends Controller
         ]);
         //And then save the email in cookie
         $email=$request->input("email");
-        Cookie::queue("email",$email,60*24*30);
+        $THIRTY_DAYS_IN_MINS =60*24*30;
+        cookie("email",$email,$THIRTY_DAYS_IN_MINS);
         $request->validate([
             'password'=>'required'
         ]);
@@ -93,21 +76,22 @@ class LoginController extends Controller
 
         }catch(Exception $e){
             return back()->withErrors(['main'=>'Couldn\'t create account. An error occured']);
-
         }
-
     }
 
 
     public function login(){
-        return view("auth.login");
+        $email=Cookie::get("email");
+
+        return view("auth.login",["email"=>$email]);
     }
 
     public function signup(){
         return view("auth.signup");
     }
 
-    public static function validUserId(){
+    public static function validUserId() : bool
+    {
         $user_id = Session::get("user_id");
         $user = User::find($user_id);
         if (is_null($user)){

@@ -24,12 +24,17 @@
 
     <div class="main">
         <div id="topBar">
+            <div class="leftContents">
+                <h1 id="brand-logo">Tera Diary</h1>
+                <div class="buttons">
+                    <button class="btn" id="btnImport">Import</button>
+                    <button class="btn" id="btnExport">Export</button>
+                    <input type="file" name="importFile" id="importFileInput" accept=".json" hidden>
+                </div>
+            </div>
 
-            <h1 id="brand-logo">Tera Diary</h1>
-            <div class="buttons">
-                <button class="btn" id="btnImport">Import</button>
-                <button class="btn" id="btnExport">Export</button>
-                <input type="file" name="importFile" id="importFileInput" accept=".json" hidden>
+            <div class="rightButtons">
+                <div class="userBtn btn"><i class="fa-solid fa-user"></i></div>
             </div>
         </div>
         <div id="appBody">

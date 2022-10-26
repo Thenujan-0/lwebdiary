@@ -264,8 +264,6 @@ $sidebarWidthM:150px;
         margin-top:0;
         background:white;
         padding :40px;
-        // height:80vh;
-        // height: 100%;
         height:calc(80vh - 45px);
 
         border-radius:10px;
@@ -307,10 +305,12 @@ $sidebarWidthM:150px;
                 margin:10px;
 
             }
-            .btnDel{
-                // background:#ff3f34;
-                // color:white;
+            .btnEdit,.btnDel{
+                background: white;
 
+                &:hover{
+                    background:#adadad;
+                }
             }
 
         }
@@ -324,63 +324,66 @@ $sidebarWidthM:150px;
 
     position:relative;
     filter:drop-shadow(0px 0px 10px black);
-    display:flex;
-    align-items: center;
-    justify-content:flex-start;
+
     // padding:10px 10px;
     height:70px;
     padding:0  10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
+    .leftContents{
+        display:flex;
+        align-items: center;
+        justify-content:flex-start;
 
-    h1#brand-logo{
-        font-weight: bold;
-        color:white;
-        @media screen and(max-width:600px){
-            font-size: 25px;;
-        }
-
-        @media screen and(max-width:400px){
-            font-size:20px;
-        }
-    }
-
-    // button#btnWriteEntry{
-    //     position:absolute;
-    //     top:50%;
-    //     right:2vw;
-    //     transform: translateY(-50%);
-    //     font-size:20px;
-    //     text-decoration: none;
-    //     color:black;
-    //     background:white;
-    //     border-radius: 14px;
-    //     padding:10px;
-    //     cursor:pointer;
-    //     margin:10px;
-
-    //     border:1px solid white;
-    // }
-
-    .buttons{
-        margin-left:100px;
-        @media screen  and (max-width:600px){
-            margin-left:20px;
-        }
-        @media screen  and (max-width:400px){
-            margin-left:5px;
-        }
-        .btn{
-            background:none;
-            color:rgb(163 195 203);
-
-            &:hover{
-                color:white;
-                transition: color 0.3s;
+        h1#brand-logo{
+            font-weight: bold;
+            color:white;
+            @media screen and(max-width:600px){
+                font-size: 25px;;
             }
 
+            @media screen and(max-width:400px){
+                font-size:20px;
+            }
         }
-    
+
+
+        .buttons{
+            margin-left:100px;
+            @media screen  and (max-width:600px){
+                margin-left:20px;
+            }
+            @media screen  and (max-width:400px){
+                margin-left:5px;
+            }
+            .btn{
+                background:none;
+                color:rgb(163 195 203);
+
+                &:hover{
+                    color:white;
+                    transition: color 0.3s;
+                }
+
+            }
+        
+        }
     }
+
+    .rightButtons{
+        .userBtn{
+            width:40px;
+            height:40px;
+            border-radius: 50%;
+            background:white;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+    }
+
 
 }
 

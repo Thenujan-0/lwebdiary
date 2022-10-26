@@ -2,32 +2,41 @@
 $(document).ready(function() {
     let form =$("#formWriteDiary")
 
-    let showErrorDate=(errorMsg="")=>{
-        console.log(errorMsg)
-        if(errorMsg!=""){
-            form.find("div.date p.errorMsg").html(errorMsg)
-            form.find("div.date > .error").css("visibility","visible")
-        }else{
-            form.find("div.date > .error").css("visibility","hidden")
-        }
-    }
+    let errorHandler={
+
+        date(errorMsg=""){
+            console.log(errorMsg)
+            if(errorMsg!=""){
+                form.find("div.date p.errorMsg").html(errorMsg)
+                form.find("div.date > .error").css("visibility","visible")
+            }else{
+                form.find("div.date > .error").css("visibility","hidden")
+            }
+        },
 
 
-    let showErrorDiaries=(errorMsg="")=>{
-        if(errorMsg!=""){
-            form.find("div.selectedDiaries  p.errorMsg").html(errorMsg)
-            form.find("div.selectedDiaries > div.error").css("visibility","visible")
-        }else{
-            form.find("div.selectedDiaries > div.error").css("visibility","hidden")
-        }
-    }
+        diaries(errorMsg=""){
+            if(errorMsg!=""){
+                form.find("div.selectedDiaries  p.errorMsg").html(errorMsg)
+                form.find("div.selectedDiaries > div.error").css("visibility","visible")
+            }else{
+                form.find("div.selectedDiaries > div.error").css("visibility","hidden")
+            }
+        },
 
-    let showErrorDiaryText=(errorMsg="")=>{
-        if(errorMsg!=""){
-            form.find("div.diaryText p.errorMsg").html(errorMsg)
-            form.find("div.diaryText > div.error").css("visibility","visible")
-        }else{
-            form.find("div.diaryText > div.error").css("visibility","hidden")
+        diaryData(errorMsg=""){
+            if(errorMsg!=""){
+                form.find("div.diaryText p.errorMsg").html(errorMsg)
+                form.find("div.diaryText > div.error").css("visibility","visible")
+            }else{
+                form.find("div.diaryText > div.error").css("visibility","hidden")
+            }
+        },
+        /**Removes all errors */
+        empty(){
+            this.diaries()
+            this.diaryData()
+            this.date()
         }
     }
 
@@ -45,12 +54,6 @@ $(document).ready(function() {
 
 
 
-    // console.log(selDiary.get(),"selected diary")
-    selDiary.set("personal")
-    // console.log(selDiary.get(),"selected diary")
-
-
-
     function checkDateExists(){
         let date_ =form.find("#date").val()
 
@@ -60,24 +63,21 @@ $(document).ready(function() {
         $.post("dateExists", data, function(response) {
             // console.log("")
             if(response === "true") {
-                showErrorDate("Date already exists")
-                valid = false
+                errorHandler.date("Date already exists")
+                // let valid = false
             }else{
-                showErrorDate()
+                errorHandler.date()
             }
         });
     } 
 
     //btnBackWriteDiary callback
     form.find("#btnBackWriteDiary").click(function(){
-        // console.log("btnBack callback")
         form.css("display","none")
         $("#darkOverlay").css("display","none")
         //Remove all the error messages
-        showErrorDate()
-        showErrorDiaries()
-        showErrorDiaryText()
-        // window.location.reload()
+        errorHandler.empty()
+
     })
 
     //Check if valid date when the user types diary
@@ -95,10 +95,7 @@ $(document).ready(function() {
 
     //Check if valid date when date is changed
 
-    form.find("input#date").change(
-    function(){
-        checkDateExists()
-    });
+    form.find("input#date").change(checkDateExists());
 
 
 
@@ -109,19 +106,19 @@ $(document).ready(function() {
             
             //Check if at leaset one diary is selected
             // if(form.find("#selectedDiaries").val()===""){
-            //     showErrorDiaries("Please select at least one diary")
+            //     errorHandler.diaries("Please select at least one diary")
             //     valid = false
 
             // }else{
-                // showErrorDiaries()
+                // errorHandler.diaries()
             // }
 
             //Check if something is written in diary
             if(form.find("#diaryText").val()===""){
-                showErrorDiaryText("Please write something in the diary")
+                errorHandler.diaryData("Please write something in the diary")
                 valid=false
             }else{
-                showErrorDiaryText()
+                errorHandler.diaryData()
             }
 
             return valid
@@ -146,7 +143,7 @@ $(document).ready(function() {
                     let finalMessage = messages.reduce(function(acc,curr){
                         return acc+curr+"<br>"  
                     },"")
-                    showErrorDate(finalMessage)
+                    errorHandler.date(finalMessage)
                     console.log(finalMessage)
                 }catch(e){
                     console.log("caught error",e)
@@ -157,58 +154,25 @@ $(document).ready(function() {
         }
     })
 
-    //Page reloads value is empty
-    // form.find("#selectedDiaries").val("");
-        
-
-    //Insert check mark on diary button click
-    // diaryBtn = form.find('.diaryBtn');
-    // form.find(".btnDiary").click(function(){
-
-    //     //Used in php hardcoded 
-    //     let spacer="$$$$$"
-
-    //     // console.log(form.find("#selectedDiaries").val());
-        
-
-    //     if ($(this).hasClass("selected")) {
-    //         $(this).removeClass("selected");
-    //         $(this).children("i").remove()
-            
-    //         let value=$(this).children("p").html()
-    //         //Remove diary from hidden input
-    //         // form.find("#selectedDiaries").val(form.find("#selectedDiaries").val().replace(spacer+value,""))
-    //         // selDiary.set(value)
-
-    //     }else{
-    //         $(this).addClass("selected");
-    //         $(this).children("p").before('<i class="fa fa-check"></i>');
-            
-    //         let value=$(this).children("p").html()
-    //         //Add diary to hidden input
-    //         // form.find("#selectedDiaries").val(form.find("#selectedDiaries").val()+spacer+value);
-    //         selDiary.set(value)
-    //     }
-    // })
-
     //Automatically set the date
     let today = new Date();
     form.find("#date").val(today.toISOString().substring(0, 10));
 
 
     //Increase the size of textarea depending on the text inside
-    form.find("textarea").keypress((e) => {
+    form.find("textarea").keypress(() => {
         let tArea= form.find("textArea")[0]
         tArea.style.height = "5px";
         tArea.style.height = tArea.scrollHeight+10 + "px";
 
     })
 
-
-
-
-
-
+    /**Ctrl+Enter from textarea to submit */
+    form.find("textarea").keyup(function(e){
+        if(e.ctrlKey && e.key.toLowerCase()=="enter"){
+            form.find("input[type='submit']").click()
+        }
+    })
 
 
 });

@@ -1,35 +1,30 @@
 
 $(document).ready(function(){
     let bar= $("#diaryNamesBar")
-    console.log(bar.width())
-    console.log(bar.prop("scrollWidth"))
-    console.log("why is this not working?")
-    console.log("So this is working?")
-    console.log("totally")
 
     const diaryNamesBar={
         scrollButtons:$("#diaryNamesBar i"),
         hiddenElements:[],
         resizeTimeout:null,
 
-        getElems:function(){
+        getElems(){
             return $("#diaryNamesBar button.btnDiary")
         },
         
 
-        overflowing:function(){
+        overflowing(){
             return bar.prop("scrollWidth")- bar.width() >5 
         },
 
-        overflowWidth:function(){
+        overflowWidth(){
             return bar.prop("scrollWidth")- bar.width()
         },
 
-        remainingWidth:function(){
+        remainingWidth(){
             return $("#diaryContent").width()-$("#diaryNamesBar").width()
         },
 
-        handleScrollButtons:function (){
+        handleScrollButtons (){
 
             if (diaryNamesBar.hiddenElements.length>0){
                 diaryNamesBar.scrollButtons.each(function(){$(this).css("display","inline")})
@@ -40,7 +35,7 @@ $(document).ready(function(){
 
         },
 
-        handleElements:function(){
+        handleElements(){
             console.log("handleElements is running")
 
             if (diaryNamesBar.overflowing()){
@@ -86,13 +81,13 @@ $(document).ready(function(){
 
 
         },
-        appendItem:function(elem){
+        appendItem(elem){
             console.log($("div.diaryNames i.btnNext"))
             console.log(elem)
             elem.insertBefore($("div.diaryNames i.btnNext"))
         },
 
-        onresize:function(){
+        onresize(){
             if (!diaryNamesBar.resizeTimeout){
 
                 //This timeout is used to make sure that these functions are not called too often

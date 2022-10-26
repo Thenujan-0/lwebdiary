@@ -5,30 +5,38 @@ $(document).ready(function(){
     let main =$(".main")
 
     let selDiary= {
-        name:function(){
-            /* Returns name of the selected Diary */
+        /**Returns selected DiaryName */
+        name(){
             return $("p#diaryName").text()
         },
-        date:function(){
-            /*Returns the selected date of the diary  */
+        
+        /**Returns selected Date */
+        date(){
             return $(".diaryDataHeader p.selectedDate").text()
+        },
+        
+        /**Returns selected diaryName ,selected Date */
+        get(){
+            return [this.name(),this.date()]
         }
-    }
+    };
 
-    //init cacher with diaryNames
-    let diaryNames = $(".btnDiary").toArray()
-    let diaryNamesDict={};
-    diaryNames.forEach(function(elem){
-        let text = elem.textContent
-        let id = elem.getAttribute("data-id")
-        console.log(id,text)
-        diaryNamesDict[id]=text
-    })
-    // console.log(diaryNamesDict)
-    cacher.init(diaryNamesDict)
+    /**init cacher with diaryNames */
+    (function(){
+        let diaryNames = $(".btnDiary").toArray()
+        let diaryNamesDict={};
 
-    //Add btnWriteEntry callback
-    $("#btnWriteEntry").click()
+        diaryNames.forEach(function(elem){
+            let text = elem.textContent
+            let id = elem.getAttribute("data-id")
+            //console.log(id,text)
+            diaryNamesDict[id]=text
+        })
+        // console.log(diaryNamesDict)
+        cacher.init(diaryNamesDict)
+    })()
+
+
 
     function hideWriteInline(){
         $(".btnWriteInline").css("display","none")
@@ -38,45 +46,33 @@ $(document).ready(function(){
         $(".btnWriteInline").css("display","inline")
     }
 
-    function findDatesNearby(){
-        let dates=[]
-        let count = 5
-        let targetDate = selDiary.date()
-        $(".btnDate").each(function(ind,elem){
-          dates.push(elem.innerHTML)
-        })
-        let ind = dates.indexOf(targetDate)
-        let startInd =ind-count
-        if (ind<=count){
-            startInd=0
-        }
-        dates =dates.slice(startInd,ind+count)
-        return dates
 
-      }
+
+
     
+    
+    
+    
+    let diaryData= {
+        set(){
 
-    //The following variable is used to know if a request to setDiary data is already pending
-    window.pendingsetDiaryDataReq=false;
-    function setDiaryData(){
-        addSkeleton()
-        // console.log("added skeleton")
-        //If already a request is pending don't send another one
-        // if (window.pendingsetDiaryDataReq){
-        //     console.log("pending diary Data request")
-        //     return;
-        // }
+        },
+        /**Handles the retrived data */
+        handleData(){
+
+        }
+    }
 
 
 
-        let selectedDiary_=selDiary.name()
-        let selectedDate=selDiary.date()
-        // console.log("selectedDiary",selectedDiary_)
-        let data = {date:selectedDate,selectedDiary:selectedDiary_}
-        if(cacher.dateExists(selectedDate)){
-            console.log(cacher.diaries[selectedDate])
-            let response=cacher.diaries[selectedDate][selectedDiary_]
-            console.log("response",response)
+    /** if the selected date exists in cache, sets the diary and returns true.
+        returns false if date doesn't exist in cache
+    */
+    function setDiaryDataFromCache(selDiary,selDate){
+        if(cacher.dateExists(selDate)){
+            //console.log(cacher.diaries[selectedDate])
+            let response=cacher.diaries[selDate][selDiary]
+            //console.log("response",response)
             if(response && response!=""){
                 $(".diaryData").html(response)
             }else{
@@ -84,62 +80,49 @@ $(document).ready(function(){
                 addBtnWriteInlineListener()
             }
             removeSkeleton()
+            handleEmptyDiaryNames()
 
+        }else{
+            cacher.cacheNearByDates(selDate).done(function(){
+                setDiaryDataFromCache(selDiary,selDate)
+            })
+        }
+
+    }
+
+
+    /**
+     * Sets the currect diary data for the current date
+     * @param  {} {refresh}={}
+     */
+    function setDiaryData({refresh=null}={}){
+        /* refresh argument is date that has to be refreshed from cache */
+        addSkeleton()
+
+        console.log("refresh is",refresh)
+
+        let selectedDiary=selDiary.name()
+        let selectedDate=selDiary.date()
+        // console.log("selectedDiary",selectedDiary_)
+        if (refresh){
+            console.log("refreshing")
+            cacher.cacheDates([selectedDate]).done(function(){
+                setDiaryDataFromCache(selectedDiary,selectedDate)
+            })
             return;
         }
-        $.get("diaryEntry/show",data,function (response){
-            // console.log(response,"resp")
-            let currSelectedDiary= selDiary.name()
-            let currselectedDate=selDiary.date()
-
-
-            //If the selected diary is not the same as the one this request was sent for, don't show the data
-            if (data["selectedDiary"]!=currSelectedDiary || data["date"]!=currselectedDate){
-                console.log(data["selectedDiary"],currSelectedDiary,data["date"],currselectedDate)
-                return;
-            }
-            console.log("No")
-            console.log(data["selectedDiary"],currSelectedDiary,data["date"],currselectedDate)
-
-            if(response!=""){
-                $(".diaryData").html(response)
-            }else{
-                $(".diaryData").html("Nothing written here :( <button class='btn btnWriteInline'>Write</button>")
-                addBtnWriteInlineListener()
-            }
-            removeSkeleton()
-        })
-
-        let datesToQuery = findDatesNearby()
-        //Remove the dates that existin cache
-        let datesInCache = Object.keys(cacher.diaries)
-        console.log("datesInCache",datesInCache)
-        datesToQuery = datesToQuery.filter(function(elem){
-            return !datesInCache.includes(elem)
-                
-        })
-        // console.log("queriedDates",datesToQuery)
-
-        $.post("/getDiaryDatas",{dates:datesToQuery,_token:token},function(resp){
-            // console.log(resp)
-            let json = JSON.parse(resp)
-            json.forEach(elem => {
-                // console.log("elem",elem)
-                cacher.set(elem["date"],elem["diary_name_id"],elem["data"])
-            });
-
-            // console.log(cacher.diaries)
-
-        })
-
-        // console.log("removed skeleton")
+        setDiaryDataFromCache(selectedDiary,selectedDate)
     }
 
     //sets the diary data for last date 
     setDiaryData()
 
 
-
+    /**
+     * Download a specified file
+     * @param  {} filename
+     * @param  {} text
+     */
     function download(filename, text) {
         var element = document.createElement('a');
         element.setAttribute('href', 'data:	application/json;charset=utf-8,' + encodeURIComponent(text));
@@ -153,15 +136,17 @@ $(document).ready(function(){
         document.body.removeChild(element);
     }
 
-    //Add btnDate callback
+    /**
+     * BtnDate callback
+     */
     function btnDateCallback(){
-        console.log("btnDate callback")
+        //console.log("btnDate callback")
         let date=$(this).val()=="" ? $(this).text() : $(this).val()
-        console.log(date)
+        //console.log(date)
 
         //Last selected date
         let lastSelDate=selDiary.date()
-        console.log(lastSelDate)
+        //console.log(lastSelDate)
 
         if(lastSelDate==date){
             return;
@@ -175,83 +160,101 @@ $(document).ready(function(){
         $(".diaryDataHeader p.selectedDate").text(date)
 
         setDiaryData()
-        disableEditMode()
+        editMode.disable()
 
 
         ///Handle empty diaryNames
-        handleEmptyDiaryNames()
+        //handleEmptyDiaryNames()
     }
     $(".btnDate").click(btnDateCallback)
     $("select#selectedDateInput").change(btnDateCallback)
 
+    let editMode={
+        isEnabled(){
+            return $("p.diaryData").attr("contentEditable")==="true"
+        },
+        enable(){
+            $("p.diaryData").attr("contentEditable","true")
+            $("p.diaryData").focus()
+            $(".btnEdit").find(".fa-pen").addClass("fa-check").removeClass("fa-pen")
+            hideWriteInline()
+        },
 
-    function enableEditMode(){
-        $("p.diaryData").attr("contentEditable","true")
-        $("p.diaryData").focus()
-        $(".btnEdit").html("Save")
-        hideWriteInline()
-    }
-
-    function disableEditMode(){
-        if($("p.diaryData").attr("contentEditable")!="true"){
-            return 
-        }
-        let selectedDiary_= $("p#diaryName").text()
-        let textData= $("p.diaryData").text()
-        
-
-        //check if it is empty by checking 
-        //If it has an inline write button,
-        //If it does then we are ediing an empty entry
-        if($(".btnWriteInline").length>0){
-
-            //We have to do some processing to remove the inline write button from the text
-            textData = textData.substr(0,textData.length-5)
-            console.log(textData)
-            let data={_token:token,
-                "diaryName":selectedDiary_,
-                data:textData,
-                date:$(".btnDate.selected").html(),
-                allowDuplicateDates:true
-
+        disable(){
+            //console.log("disable edit mode was called")
+            if($("p.diaryData").attr("contentEditable")!="true"){
+                return 
             }
-            console.log(selectedDiary_,textData,data)
+            let selectedDiary_= $("p#diaryName").text()
+            let textData= $("p.diaryData").text()
             
-            //todo
-            $.post("writeDiary",data,function(response){
-                console.log(response)
-                setDiaryData()
-            })
 
-            handleEmptyDiaryNames()
+            //check if it is empty by checking 
+            //If it has an inline write button,
+            //If it does then we are ediing an empty entry
+            if($(".btnWriteInline").length>0){
 
-        //If it is not > 0, we are editing an existing entry
-        }else{
-            console.log(textData)
-            let data={
-                diaryName:selDiary.name(),
-                data:textData,
-                _token:token,
-                date:$(".btnDate.selected").html()
+                //We have to do some processing to remove the inline write button from the text
+                textData = textData.substr(0,textData.length-5)
+                //console.log(textData)
+                let selectedDate = $(".btnDate.selected").html()
+                let data={_token:token,
+                    "diaryName":selectedDiary_,
+                    data:textData,
+                    date:selectedDate,
+                    allowDuplicateDates:true
 
+                }
+                //console.log(selectedDiary_,textData,data)
+                
+                //todo handle error response
+                $.post("writeDiary",data,function(response){
+                    //console.log(response)
+                    setDiaryData({refresh:true})
+                })
+
+                handleEmptyDiaryNames()
+
+            //If it is not > 0, we are editing an existing entry
+            }else{
+                //console.log(textData)
+                let data={
+                    diaryName:selDiary.name(),
+                    data:textData,
+                    _token:token,
+                    date:$(".btnDate.selected").html()
+
+                }
+                $.post("editDiaryData",data,function(response){
+                    //console.log(response)
+                    setDiaryData({refresh:true})
+                })
             }
-            console.log(selectedDiary_,textData,data)
-            $.post("editDiaryData",data,function(response){
-                console.log(response)
-                setDiaryData()
+            $("p.diaryData").attr("contentEditable","false")
+            // $(".btnEdit").html("Edit")
+            $(".btnEdit").find(".fa-check").addClass("fa-pen").removeClass("fa-check")
+            // unHideWriteInline()
+        },
+        listenKeyboard(){
+
+            /**Keyboard event of ctrl click to confirm edit */
+            $("p.diaryData").keyup(function(e){
+                if(e.ctrlKey && e.key.toLowerCase()==="enter" && editMode.isEnabled()){
+                    editMode.disable()
+                }
             })
         }
-        $("p.diaryData").attr("contentEditable","false")
-        $(".btnEdit").html("Edit")
-        // unHideWriteInline()
+
     }
 
     //Add btnEdit callback
     $(".btnEdit").click(function(){
-        if($(this).html()=="Edit"){
-            enableEditMode()
+        
+        //console.log()
+        if($(this).find(".fa-pen").length>0){
+            editMode.enable()
         }else{
-            disableEditMode()
+            editMode.disable()
         }
     })
 
@@ -265,9 +268,7 @@ $(document).ready(function(){
             data:{date:date_,
                 _token:token,},
             complete:function(response){
-                console.log(response)
                 window.location.reload()
-                console.log("reloaded")
                 }
         })
     })
@@ -289,7 +290,7 @@ $(document).ready(function(){
 
     //Add btnDiary SmallScreen callback
     main.find("select.diaryNames").change(function(){
-        console.log($(this).val(),"value now")
+        //console.log($(this).val(),"value now")
         $("p#diaryName").html($(this).val())
         setDiaryData()
 
@@ -298,7 +299,7 @@ $(document).ready(function(){
     function addBtnWriteInlineListener(){
         //Add btnWriteInline callback
         $(".btnWriteInline").click(function(){
-            enableEditMode()
+            editMode.enable()
             handleEmptyDiaryNames()
         
         })
@@ -325,8 +326,8 @@ $(document).ready(function(){
         let data={_token:token}
 
         $.post("exportDiary",data,function(response){
-            console.log(response)
-            console.log(typeof response)
+            //console.log(response)
+            //console.log(typeof response)
             download("teraDiaryExport.json",response) //todo remove this
             // window.open(response)
         })
@@ -342,10 +343,6 @@ $(document).ready(function(){
     $("#importFileInput").change(function(event){
         let files=event.target.files
         let file=files[0]
-        console.log(file.name)
-        console.log(file.type)
-
-        console.log($(this).val())
 
         if (file.type!="application/json"){
             return;
@@ -355,76 +352,62 @@ $(document).ready(function(){
         reader.readAsText(file,"UTF-8");
         reader.onload = function(event){
             $.post("importDiary",{_token:token,fileData:event.target.result},function(response){
-                console.log("response of import",response)
+                //console.log("response of import",response)
             })
         }
         
         
     })
+
+    editMode.listenKeyboard()
+    
+
     
 
 
-
-function addSkeleton(){
-    $("div.diaryDataSkeletons").css("display","block")
-    $("p.diaryData").css("display","none")
-}
-function removeSkeleton(){
-    $("div.diaryDataSkeletons").css("display","none")
-    $("p.diaryData").css("display","inline")
-}
-
-//Handle empty diaryNames
-function handleEmptyDiaryNames(){
-    let data= {_token:token,date:selDiary.date()}
-    let date = selDiary.date()
-    if (cacher.dateExists(date)){
-        // console.log("--------------------")
-        let emptyDiaries = cacher.emptyDiaries(date)
-        emptyDiaryProcessor(emptyDiaries)
-        return
+    /**Add skeleton loader */
+    function addSkeleton(){
+        $("div.diaryDataSkeletons").css("display","block")
+        $("p.diaryData").css("display","none")
     }
 
-    function emptyDiaryProcessor(emptyDiaries){
-        let diaryNames= $("button.btnDiary")
-        // console.log(emptyDiaries)
-        diaryNames.each((key,arg)=>{
-            let elem =$(arg)
-            if(emptyDiaries.includes(elem.text())){
-                elem.addClass("empty")
-            }else{
-                elem.removeClass("empty")
-            }
-        })
+    /** Remove skeleton loader */
+    function removeSkeleton(){
+        /* Removes the skeleton loader */
+        $("div.diaryDataSkeletons").css("display","none")
+        $("p.diaryData").css("display","inline")
     }
 
-    $.post("getEmptyDiaryNames",data,function(response){
-        // response.array.forEach(element => {
-        //     $(".btnDiary")
-        // });
-        let emptyDiaries;
-        try{
-            emptyDiaries= JSON.parse(response)
-        }catch(e){
-            console.log(response)
-            console.log(e)
+    //Handle empty diaryNames
+    function handleEmptyDiaryNames(){
+        // let data= {_token:token,date:selDiary.date()}
+        let date = selDiary.date()
+        if (cacher.dateExists(date)){
+            // console.log("--------------------")
+            let emptyDiaries = cacher.emptyDiaries(date)
+            emptyDiaryProcessor(emptyDiaries)
+            console.log("yeah")
+            return
+        }else{
+            console.log("cache doesnt have it")
         }
+
+        function emptyDiaryProcessor(emptyDiaries){
+            let diaryNames= $("button.btnDiary")
+            // console.log(emptyDiaries)
+            diaryNames.each((key,arg)=>{
+                let elem =$(arg)
+                if(emptyDiaries.includes(elem.text())){
+                    elem.addClass("empty")
+                }else{
+                    elem.removeClass("empty")
+                }
+            })
+        }
+
+
         
-
-    })
-
-}
-handleEmptyDiaryNames()
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 })

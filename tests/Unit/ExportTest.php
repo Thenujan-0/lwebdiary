@@ -12,13 +12,13 @@ class ExportTest extends TestCase
      *
      * @return void
      */
-    public function test_click()
-    {
-        $resp = $this->get("/");
-        $resp->assertStatus(200);
+    // public function test_click()
+    // {
+    //     $resp = $this->get("/");
+    //     $resp->assertStatus(200);
 
         
-    }
+    // }
 }
 
 ?>

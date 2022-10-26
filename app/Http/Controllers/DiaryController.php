@@ -116,7 +116,7 @@ class DiaryController extends Controller
         $user_id=Session::get("user_id");
         $date=$request->date;
         $data=$request->data;
-        $selectedDiary=$request->selectedDiary;
+        $selectedDiary=$request->diaryName;
         $diaryId=DiaryName::where("diary_name",$selectedDiary)->first()->id;
 
         DiaryEntry::where(["user_id"=>$user_id,"date"=>$date,"diary_name_id"=>$diaryId])->update(["data"=>$data]);

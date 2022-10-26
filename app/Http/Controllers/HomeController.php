@@ -35,11 +35,11 @@ class HomeController extends Controller
 
         
         //Check if logged in
-        $notLoggedIn =!(session()->has("user_id") && session()->has("name"));
+        $notLoggedIn =!(session()->has("user_id"));
         
         if($notLoggedIn || !LoginController::validUserId()){
-            $email=Cookie::get("email");
-            return view("auth.login",compact("email"));
+            // return view("auth.login",compact("email"));
+            return redirect("login");
 
         }
         

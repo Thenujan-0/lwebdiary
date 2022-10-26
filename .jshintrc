@@ -1,0 +1,10 @@
+{
+    // "undef": true,
+    "unused": true,
+    "-W033": false,
+    "-W104": false,
+    "-W119": false,
+    "globals": {
+        "MY_GLOBAL": true
+    }
+}
