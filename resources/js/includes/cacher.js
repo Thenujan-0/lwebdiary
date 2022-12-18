@@ -25,7 +25,6 @@ let dateHandler ={
 
 
 let cacher ={
-    fake:true,
     diaryNames:{}, //Contains diaryNameIds and their diaryNames
     diaries: {},//{date:{diary_name:data,empty_diaries:[]}}
     init(diaryNames,diaries){
@@ -92,7 +91,7 @@ let cacher ={
 
         return this.cacheDates(datesToQuery)
     },
-    
+
 }
 
 export { cacher}
