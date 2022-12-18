@@ -9,6 +9,7 @@ export default defineConfig({
             'resources/assets/sass/app.scss',
             'resources/assets/sass/writeDiary.scss',
             'resources/assets/sass/index.scss',
+            'resources/assets/sass/menuPopup.scss',
             'resources/js/app.js',
             'resources/js/index.js',
             'resources/js/writeDiary.js',

@@ -1,4 +1,6 @@
 import {cacher } from "./includes/cacher.js"
+import {menuPopup} from "./menuPopup.js"
+
 
 $(document).ready(function(){
     
@@ -408,6 +410,13 @@ $(document).ready(function(){
 
         
     }
+    let userBtn =$(".btn.userBtn")
+
+    userBtn.click(function(){
+        let rect = userBtn[0].getBoundingClientRect()
+        console.log(rect)
+        menuPopup.show(rect.x+rect.width,rect.y+rect.height)
+    })
 
 
 })

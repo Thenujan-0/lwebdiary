@@ -121,6 +121,7 @@
     <div id="darkOverlay" style="display:none;"></div>
     @include("includes.writeDiary")
     @include("includes.createDiary")
+    @include("includes.menuPopup")
     @error('newerror') 
     <h1>{{$message}}</h1>
     @enderror

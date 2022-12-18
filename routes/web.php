@@ -25,6 +25,8 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 Route::get('/', [HomeController::class,"index"])->name("index");
 Route::get("/login",[LoginController::class,"login"])->name("login");
 Route::get("/signup",[LoginController::class,"signup"])->name("signup");
+Route::get("/logout",[LoginController::class,"logoutUser"]);
+
 // Route::get("/test",function(){return view('includes.errorPopup');});
 
 Route::post('/writeDiary', [DiaryController::class,"writeDiary"])->name("writeDiary");
@@ -32,12 +34,7 @@ Route::post("createFirstDiary",[HomeController::class,"createFirstDiary"]);
 Route::post("createDiary",[DiaryController::class,"createDiary"]);
 
 Route::post("loginUser",[LoginController::class,"loginUser"]);
-// Route::post("loginUser",function(Request $request){
-//     Debugbar::warning("loginUser");
-//     $request->validate(["hey"=>"required"]);
-//     // $screenSize = $request->input("hey");
 
-// });
 Route::post("registerUser",[LoginController::class,"registerUser"])->name("registerUser");
 
 Route::resource("/diaryEntry",DiaryEntryController::class);
@@ -48,6 +45,5 @@ Route::post("/editDiaryData",[DiaryController::class,"editDiaryData"]);
 Route::post("/getEmptyDiaryNames",[DiaryController::class,"getEmptyDiaryNames"]);
 Route::post("/importDiary",[DiaryController::class,"importDiary"]);
 Route::post("/getDiaryDatas",[DiaryController::class,"getDiaryDatas"]);
-
 
 Route::post("simple",[HomeController::class,"setScreenSize"]);

@@ -79,6 +79,11 @@ class LoginController extends Controller
         }
     }
 
+    public function logoutUser(Request $request){
+        $request->session()->flush();
+        return redirect("login");
+    }
+
 
     public function login(){
         $email=Cookie::get("email");
