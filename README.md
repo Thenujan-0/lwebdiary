@@ -3,4 +3,4 @@
 
 
 ## About Tera Diary
-This is an easy to use simple diary application. It is running on heroku and it uses postgresql for database.
+This is an easy to use simple diary application.
