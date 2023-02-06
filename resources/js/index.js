@@ -404,10 +404,8 @@ $(document).ready(function(){
                 }else{
                     elem.removeClass("empty")
                 }
-            })
+            }) 
         }
-
-
         
     }
     let userBtn =$(".btn.userBtn")
@@ -418,5 +416,17 @@ $(document).ready(function(){
         menuPopup.show(rect.x+rect.width,rect.y+rect.height)
     })
 
+
+    //To avoid menu getting closed when clicked inside
+    menuPopup.elem.click(function(e){
+        e.stopPropagation()
+    })
+    $('.userBtn').click(function(e){
+        e.stopPropagation()
+    })
+
+    document.addEventListener('click', function(e){
+        menuPopup.hide()
+    })
 
 })

@@ -10,7 +10,9 @@ let menuPopup = {
             "top":y,
             "right":$(window).width()-x
             })
-        
+    },
+    hide(){
+        this.elem.css('display','none')
     }
 }
 
