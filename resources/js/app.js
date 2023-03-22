@@ -1,2 +1,2 @@
 import './bootstrap';
-import './assets/sass/index.scss'
+import '../assets/sass/index.scss'
