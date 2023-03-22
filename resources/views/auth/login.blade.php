@@ -1,19 +1,9 @@
 @extends("layouts.app")
     
 @section("head")
-    @env("local")
-        <link rel="stylesheet" href="{{asset("css/signup-login.css")}}">
-    @endenv
-
-    @env("heroku")
-        <link rel="stylesheet" href="{{secure_asset("css/signup-login.css")}}">
-
-    @endenv
-    {{-- <script src="js/login.js"></script> --}}
+    @vite(["resources/assets/sass/signup-login.scss"])
     <title>Login WebDiary</title>
 @endsection
-
-
 
 @section("content")
 
