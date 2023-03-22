@@ -3,8 +3,6 @@
 let menuPopup = {
     elem:$("#menuPopup"),
     show(x,y){
-        console.log({x,y})
-        console.log($(window).width())
         this.elem.css({
             "display":"block",
             "top":y,

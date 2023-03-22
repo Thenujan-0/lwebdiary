@@ -10,7 +10,6 @@ $(document).ready(function () {
 
   var showErrorDate = function showErrorDate() {
     var errorMsg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-    console.log(errorMsg);
 
     if (errorMsg != "") {
       form.find("div.date p.errorMsg").html(errorMsg);
