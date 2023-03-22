@@ -65,7 +65,27 @@ $(document).ready(function(){
         }
     }
 
+    function parseLink(text){
+        if (!(text.indexOf("https://")>0 )){
+            return text
+        }
+        let start = text.indexOf("https://");
+        let remaining =  text.substring(start)
+        let end = findEnd(start, remaining)
+        let link = text.substring(start,end)
+        return text.replace(link, `<a target="_blank" class="diaryLink" href="${link}">${link}</a>`)
 
+        function findEnd(start, remaining){
+            let linkEndChars=[' ','(',')']
+            let indexes =[]
+            linkEndChars.forEach(function(char){
+                if (remaining.indexOf(char)>0){
+                    indexes.push(remaining.indexOf(char)+start)
+                }
+            })
+            return Math.min(...indexes)
+        }
+    }
 
     /** if the selected date exists in cache, sets the diary and returns true.
         returns false if date doesn't exist in cache
@@ -76,6 +96,7 @@ $(document).ready(function(){
             let response=cacher.diaries[selDate][selDiary]
             //console.log("response",response)
             if(response && response!=""){
+                response=parseLink(response)
                 $(".diaryData").html(response)
             }else{
                 $(".diaryData").html("Nothing written here :( <button class='btn btnWriteInline'>Write</button>")
@@ -100,8 +121,6 @@ $(document).ready(function(){
     function setDiaryData({refresh=null}={}){
         /* refresh argument is date that has to be refreshed from cache */
         addSkeleton()
-
-        console.log("refresh is",refresh)
 
         let selectedDiary=selDiary.name()
         let selectedDate=selDiary.date()
@@ -388,10 +407,7 @@ $(document).ready(function(){
             // console.log("--------------------")
             let emptyDiaries = cacher.emptyDiaries(date)
             emptyDiaryProcessor(emptyDiaries)
-            console.log("yeah")
             return
-        }else{
-            console.log("cache doesnt have it")
         }
 
         function emptyDiaryProcessor(emptyDiaries){
@@ -412,7 +428,6 @@ $(document).ready(function(){
 
     userBtn.click(function(){
         let rect = userBtn[0].getBoundingClientRect()
-        console.log(rect)
         menuPopup.show(rect.x+rect.width,rect.y+rect.height)
     })
 
